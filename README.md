@@ -1,5 +1,10 @@
 
 
+# About
+
+
+
+# Methods
 
 ## Initial inspection
 
@@ -111,6 +116,39 @@ ND1: --auto chose L-INS-i (“Probably most accurate, very slow”), which uses 
 cyt-b: --auto chose FFT-NS-i (this is the standard strategy with iterative refinement). It is normal for this alignment size to opt for this faster option.
 123 seq × 1150 pb
 
+## Alignment trimming
+
+For the NAD1 gene we decided to keep the alignment as it was, with very few gaps and mostly complete
+
+```bash
+# Some trials
+trimal -in nd1.aln.fasta \
+       -out nd1.aln.gappyout.fasta \
+       -gappyout # 620 bp, seems to change too much, and that could remove signal and degrade topology (Portik et al. 2021)
+trimal -in nd1.aln.fasta \
+       -out nd1.aln.0.8.fasta \
+       -gt 0.8 #969, doesn't change anything
+```
+In cytochrome b we inspected the alignment and selected the position to conserve. Our criteria was to respect the start codon and keep an alignment length multiple of 3. Thus, that left us with positions 22-1149. But in trimal pos are 0-based, so:
+
+```bash
+trimal -in cytochrome_b.aln.fasta \
+       -out cytb.aln.fasta \
+       -selectcols { 21-1148 } -complementary -fasta -keepheader
+
+
+# Other trials
+trimal -in cytochrome_b.aln.fasta \
+       -out cytb.aln.gappyout.fasta \
+       -gappyout    #1115 bp
+trimal -in cytochrome_b.aln.fasta \
+       -out cytb.aln.0.8.fasta \
+       -gt 0.8    #1126 bp 
+```
+
+> ⚠️ **IMPORTANT:** MrBayes uses the same method as most maximum likelihood programs: it treats
+gaps and missing characters as missing data. Thus, gaps and missing characters
+will not contribute any phylogenetic information.
 
 ## Alignment concatenation
 
