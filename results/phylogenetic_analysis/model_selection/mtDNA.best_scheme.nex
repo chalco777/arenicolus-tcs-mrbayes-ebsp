@@ -1,0 +1,16 @@
+#nexus
+begin sets;
+  charset cytb_pos1 = 1-1128\3;
+  charset cytb_pos2 = 2-1128\3;
+  charset cytb_pos3 = 3-1128\3;
+  charset nd1_pos1 = 1129-2097\3;
+  charset nd1_pos2 = 1130-2097\3;
+  charset nd1_pos3 = 1131-2097\3;
+  charpartition mymodels =
+    SYM+G4: cytb_pos1,
+    HKY+F+I+G4: cytb_pos2,
+    HKY+F+G4: cytb_pos3,
+    SYM+G4: nd1_pos1,
+    HKY+F+I: nd1_pos2,
+    HKY+F+I+G4: nd1_pos3;
+end;

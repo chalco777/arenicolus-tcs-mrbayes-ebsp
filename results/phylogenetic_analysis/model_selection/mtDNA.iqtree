@@ -1,0 +1,377 @@
+IQ-TREE 2.4.0 built Feb 12 2025
+
+Partition file name: mtDNA_partitions_codon.txt
+Input file name: mtDNA_concat.fasta
+Type of analysis: ModelFinder + tree reconstruction
+Random seed number: 927623
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Bui Quang Minh, Heiko A. Schmidt, Olga Chernomor, Dominik Schrempf,
+Michael D. Woodhams, Arndt von Haeseler, and Robert Lanfear (2020)
+IQ-TREE 2: New models and efficient methods for phylogenetic inference
+in the genomic era. Mol. Biol. Evol., in press.
+https://doi.org/10.1093/molbev/msaa015
+
+To cite ModelFinder please use: 
+
+Subha Kalyaanamoorthy, Bui Quang Minh, Thomas KF Wong, Arndt von Haeseler,
+and Lars S Jermiin (2017) ModelFinder: Fast model selection for
+accurate phylogenetic estimates. Nature Methods, 14:587–589.
+https://doi.org/10.1038/nmeth.4285
+
+Since you used partition models please also cite:
+
+Olga Chernomor, Arndt von Haeseler, and Bui Quang Minh (2016)
+Terrace aware data structure for phylogenomic inference from
+supermatrices. Syst. Biol., 65:997-1008.
+https://doi.org/10.1093/sysbio/syw037
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 123 taxa with 6 partitions and 2097 total sites (0% missing data)
+
+  ID	Type	Seq	Site	Unique	Infor	Invar	Const	Name
+   1	DNA	123	376	130	78	268	268	cytb_pos1
+   2	DNA	123	376	62	21	341	341	cytb_pos2
+   3	DNA	123	376	327	268	47	47	cytb_pos3
+   4	DNA	123	323	107	65	221	221	nd1_pos1
+   5	DNA	123	323	41	18	292	292	nd1_pos2
+   6	DNA	123	323	269	214	51	51	nd1_pos3
+
+Column meanings:
+  Unique: Number of unique site patterns
+  Infor:  Number of parsimony-informative sites
+  Invar:  Number of invariant sites
+  Const:  Number of constant sites (can be subset of invariant sites)
+
+ModelFinder
+-----------
+
+Best-fit model according to BIC: SYM+G4:cytb_pos1,HKY+F+I+G4:cytb_pos2,HKY+F+G4:cytb_pos3,SYM+G4:nd1_pos1,HKY+F+I:nd1_pos2,HKY+F+I+G4:nd1_pos3
+
+List of best-fit models per partition:
+
+  ID  Model                  LogL         AIC      w-AIC        AICc     w-AICc         BIC      w-BIC
+   1  SYM+G4            -1715.662    3445.323 + 2.12e-314    3445.627 + 2.12e-314    3472.830 + 6.95e-310
+   2  HKY+F+I+G4         -880.098    1774.196 + 2.12e-314    1774.500 + 2.12e-314    1801.703 + 6.95e-310
+   3  HKY+F+G4          -4173.566    8359.133 + 2.12e-314    8359.360 + 2.12e-314    8382.710 + 6.95e-310
+   4  SYM+G4            -1586.530    3187.060 + 2.12e-314    3187.416 + 2.12e-314    3213.504 + 6.95e-310
+   5  HKY+F+I            -796.192    1604.385 + 2.12e-314    1604.650 + 2.12e-314    1627.050 + 6.95e-310
+   6  HKY+F+I+G4        -3353.277    6720.553 + 2.12e-314    6720.909 + 2.12e-314    6746.997 + 6.95e-310
+
+AIC, w-AIC   : Akaike information criterion scores and weights.
+AICc, w-AICc : Corrected AIC scores and weights.
+BIC, w-BIC   : Bayesian information criterion scores and weights.
+
+Plus signs denote the 95% confidence sets.
+Minus signs denote significant exclusion.
+
+SUBSTITUTION PROCESS
+--------------------
+
+Edge-linked-proportional partition model with separate substitution models and separate rates across sites
+
+  ID  Model           Speed  Parameters
+   1  SYM+G4         0.3338  SYM{12.2861,49.5625,17.5878,1.05966,99.7707}+FQ+G4{0.152383}
+   2  HKY+F+I+G4     0.1117  HKY{11.8557}+F{0.199144,0.252673,0.132357,0.415826}+I{0.813615}+G4{0.537401}
+   3  HKY+F+G4       2.7778  HKY{13.4942}+F{0.425796,0.312137,0.0678474,0.194219}+G4{1.92988}
+   4  SYM+G4         0.4787  SYM{3.44375,8.76847,3.19085,0.0001,23.9135}+FQ+G4{0.195564}
+   5  HKY+F+I        0.0880  HKY{3.52638}+F{0.180039,0.278883,0.120657,0.42042}+I{0.883409}
+   6  HKY+F+I+G4     2.1736  HKY{12.8447}+F{0.515578,0.233842,0.0507978,0.199783}+I{0.0319301}+G4{3.28521}
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -12479.0497 (s.e. 276.3311)
+Unconstrained log-likelihood (without tree): -7918.7893
+Number of free parameters (#branches + #model parameters): 282
+Akaike information criterion (AIC) score: 25522.0994
+Corrected Akaike information criterion (AICc) score: 25610.0883
+Bayesian information criterion (BIC) score: 27114.9095
+
+Total tree length (sum of branch lengths): 2.4955
+Sum of internal branch lengths: 0.6037 (24.1932% of tree length)
+
+WARNING: 70 near-zero internal branches (<0.0005) should be treated with caution
+         Such branches are denoted by '**' in the figure below
+
+NOTE: Tree is UNROOTED although outgroup taxon '2010_7' is drawn at root
+
++**2010_7
+|
+|                                                                       +---CAS223822
+|                                                                    +--|
+|                                                                    |  |  +---MVZ149956
+|                                                                    |  +--|
+|                                                                    |     |                      +-------------------------Phr_corona
+|                                                                    |     |                  +---|
+|                                                                    |     |                  |   |   +-------------------Uro_ornatu
+|                                                                    |     |                  |   +---|
+|                                                                    |     |                  |       +-------------------Uta_stansb
+|                                                                    |     |            +-----|
+|                                                                    |     |            |     +--------------------Sce_merria
+|                                                                    |     +------------|
+|                                                                    |                  |  +-------------Sce_jarrov
+|                                                                    |                  +--|
+|                                                                    |                     +--------Sce_occide
+|                                                                 +--|
+|                                                                 |  +----CAS229140
+|                                                              +--|
+|                                                              |  +---JWA470
+|                                                           +--|
+|                                                           |  |  +---JWA338
+|                                                           |  +--|
+|                                                           |     +---MVZ237413
+|                                                        +--|
+|                                                        |  +--MVZ241596
+|                                                     +--|
+|                                                     |  |  +--SGR3
+|                                                     |  +--|
+|                                                     |     +**SGR4
+|                                                  +--|
+|                                                  |  |        +**DED075
+|                                                  |  |     +--|
+|                                                  |  |     |  +--TJH2880
+|                                                  |  |  +--|
+|                                                  |  |  |  |  +--LAF10450
+|                                                  |  |  |  +--|
+|                                                  |  |  |     |     +--TJH2840
+|                                                  |  |  |     |  +--|
+|                                                  |  |  |     |  |  +**TJH2846
+|                                                  |  |  |     +**|
+|                                                  |  |  |        +**TX2011_241
+|                                                  |  +--|
+|                                                  |     +--TJH2918
+|                                               +--|
+|                                               |  |              +**DJL286
+|                                               |  |           +**|
+|                                               |  |           |  +--ESP9606
+|                                               |  |        +--|
+|                                               |  |        |  |  +**ESP9325
+|                                               |  |        |  +--|
+|                                               |  |        |     +**TCWC92573
+|                                               |  |     +**|
+|                                               |  |     |  |        +--ESP9186
+|                                               |  |     |  |     +**|
+|                                               |  |     |  |     |  +--TCWC94831
+|                                               |  |     |  |  +**|
+|                                               |  |     |  |  |  |  +**ESP9196
+|                                               |  |     |  |  |  +**|
+|                                               |  |     |  |  |     |        +--ESP9208
+|                                               |  |     |  |  |     |     +**|
+|                                               |  |     |  |  |     |     |  +--NM12_09
+|                                               |  |     |  |  |     |  +**|
+|                                               |  |     |  |  |     |  |  |  +--ESP9232
+|                                               |  |     |  |  |     |  |  +**|
+|                                               |  |     |  |  |     |  |     +--MSB57684
+|                                               |  |     |  |  |     +**|
+|                                               |  |     |  |  |        |     +--ESP9417
+|                                               |  |     |  |  |        |  +**|
+|                                               |  |     |  |  |        |  |  +--NM12_04
+|                                               |  |     |  |  |        +**|
+|                                               |  |     |  |  |           +**MTH468
+|                                               |  |     |  +--|
+|                                               |  |     |     +--NM12_07
+|                                               |  |  +--|
+|                                               |  |  |  |                 +--DJL297
+|                                               |  |  |  |              +**|
+|                                               |  |  |  |              |  +--ESP9057
+|                                               |  |  |  |           +**|
+|                                               |  |  |  |           |  |                    +**ESP9064
+|                                               |  |  |  |           |  |                 +--|
+|                                               |  |  |  |           |  |                 |  +--SCAR31
+|                                               |  |  |  |           |  |              +**|
+|                                               |  |  |  |           |  |              |  +--SCAR34
+|                                               |  |  |  |           |  |           +--|
+|                                               |  |  |  |           |  |           |  +--SCAR35
+|                                               |  |  |  |           |  |        +**|
+|                                               |  |  |  |           |  |        |  +--MTH472
+|                                               |  |  |  |           |  |     +**|
+|                                               |  |  |  |           |  |     |  |           +**MTH469
+|                                               |  |  |  |           |  |     |  |        +**|
+|                                               |  |  |  |           |  |     |  |        |  +**SCAR33
+|                                               |  |  |  |           |  |     |  |     +**|
+|                                               |  |  |  |           |  |     |  |     |  +**MTH490
+|                                               |  |  |  |           |  |     |  |  +**|
+|                                               |  |  |  |           |  |     |  |  |  +--SAR0200
+|                                               |  |  |  |           |  |     |  +--|
+|                                               |  |  |  |           |  |     |     +--SCAR09
+|                                               |  |  |  |           |  |  +**|
+|                                               |  |  |  |           |  |  |  |              +**MTH470
+|                                               |  |  |  |           |  |  |  |           +**|
+|                                               |  |  |  |           |  |  |  |           |  +--SAR0003
+|                                               |  |  |  |           |  |  |  |        +**|
+|                                               |  |  |  |           |  |  |  |        |  +**MTH489
+|                                               |  |  |  |           |  |  |  |     +--|
+|                                               |  |  |  |           |  |  |  |     |  +--SCAR08
+|                                               |  |  |  |           |  |  |  |  +**|
+|                                               |  |  |  |           |  |  |  |  |  |  +**MTH474
+|                                               |  |  |  |           |  |  |  |  |  +--|
+|                                               |  |  |  |           |  |  |  |  |     +--MTH478
+|                                               |  |  |  |           |  |  |  +**|
+|                                               |  |  |  |           |  |  |     +**MTH475
+|                                               |  |  |  |           |  +--|
+|                                               |  |  |  |           |     |  +--ESP9179
+|                                               |  |  |  |           |     +--|
+|                                               |  |  |  |           |        |        +--ESP9261
+|                                               |  |  |  |           |        |     +**|
+|                                               |  |  |  |           |        |     |  +--ESP9273
+|                                               |  |  |  |           |        |  +**|
+|                                               |  |  |  |           |        |  |  +**ESP9264
+|                                               |  |  |  |           |        +**|
+|                                               |  |  |  |           |           +--ESP9480
+|                                               |  |  |  |        +**|
+|                                               |  |  |  |        |  +**SAR0227
+|                                               |  |  |  |     +**|
+|                                               |  |  |  |     |  +**ESP9070
+|                                               |  |  |  |  +**|
+|                                               |  |  |  |  |  |           +**ESP9174
+|                                               |  |  |  |  |  |        +**|
+|                                               |  |  |  |  |  |        |  +--NM12_08
+|                                               |  |  |  |  |  |     +--|
+|                                               |  |  |  |  |  |     |  |  +--MTH270
+|                                               |  |  |  |  |  |     |  +--|
+|                                               |  |  |  |  |  |     |     +**MTH275
+|                                               |  |  |  |  |  |  +**|
+|                                               |  |  |  |  |  |  |  +--ESP9557
+|                                               |  |  |  |  |  +**|
+|                                               |  |  |  |  |     |           +--MSB57694
+|                                               |  |  |  |  |     |        +**|
+|                                               |  |  |  |  |     |        |  +**SAR0229
+|                                               |  |  |  |  |     |     +**|
+|                                               |  |  |  |  |     |     |  +**SAR0226
+|                                               |  |  |  |  |     |  +**|
+|                                               |  |  |  |  |     |  |  +**MSB57705
+|                                               |  |  |  |  |     +**|
+|                                               |  |  |  |  |        +**SAR0023
+|                                               |  |  |  +**|
+|                                               |  |  |     |  +--ESP9485
+|                                               |  |  |     +**|
+|                                               |  |  |        +**SAR0361
+|                                               |  +--|
+|                                               |     +--TCWC93505
+|                                            +--|
+|                                            |  |  +--TJH2927
+|                                            |  +**|
+|                                            |     |  +--TJH2939
+|                                            |     +--|
+|                                            |        |  +**TX2011_286
+|                                            |        +**|
+|                                            |           +--TX2012_001
+|                                         +--|
+|                                         |  |  +--ESP9451
+|                                         |  +--|
+|                                         |     +--SCAR10_2
+|                                      +**|
+|                                      |  |  +--ESP9245
+|                                      |  +--|
+|                                      |     +**SAR0264
+|                                   +**|
+|                                   |  |  +--DED051
+|                                   |  +**|
+|                                   |     +--ESP9258
+|                                +**|
+|                                |  +**DED046
+|                             +**|
+|                             |  +**SAR0259
+|                          +**|
+|                          |  |              +**CSA043
+|                          |  |           +**|
+|                          |  |           |  +--CSA061
+|                          |  |        +--|
+|                          |  |        |  +--TJH2984
+|                          |  |     +**|
+|                          |  |     |  |  +--TJH2966
+|                          |  |     |  +**|
+|                          |  |     |     +**TJH3000
+|                          |  |  +--|
+|                          |  |  |  |  +--CSA059
+|                          |  |  |  +--|
+|                          |  |  |     |  +**TJH2971
+|                          |  |  |     +**|
+|                          |  |  |        +--TJH3033
+|                          |  +**|
+|                          |     |  +**DL916
+|                          |     +--|
+|                          |        |  +**SAR0261
+|                          |        +**|
+|                          |           +**SAR0262
+|                       +--|
+|                       |  +**DED049
+|                    +**|
+|                    |  |  +--SAR0204
+|                    |  +**|
+|                    |     +--TCWC91345
+|                 +**|
+|                 |  |  +--DJL872
+|                 |  +**|
+|                 |     +--ESP9357
+|              +**|
+|              |  +**DJL868
+|           +**|
+|           |  |  +--ESP9147
+|           |  +**|
+|           |     +**SAR0351
+|        +**|
+|        |  |           +**DJL870
+|        |  |        +--|
+|        |  |        |  +--ESP9351
+|        |  |     +**|
+|        |  |     |  |  +--ESP9340
+|        |  |     |  +--|
+|        |  |     |     |  +**SAR0381
+|        |  |     |     +--|
+|        |  |     |        +**SAR0383
+|        |  |  +**|
+|        |  |  |  |  +--DJL878
+|        |  |  |  +**|
+|        |  |  |     +--ESP9621
+|        |  +**|
+|        |     +**DL914
+|     +**|
+|     |  |     +--LMC10_02
+|     |  |  +**|
+|     |  |  |  +--SAR0379
+|     |  +**|
+|     |     +**SAR0252
+|  +**|
+|  |  |  +**ESP9092
+|  |  +--|
+|  |     +**ESP9202
++--|
+|  +--DJL869
+|
++--DL902
+
+Tree in newick format:
+
+(2010_7:0.0000010312,((((((((((((((((((((((((CAS223822:0.0578873264,(MVZ149956:0.0633262590,(((Phr_corona:0.3470580127,(Uro_ornatu:0.2592569157,Uta_stansb:0.2615624260):0.0630466301):0.0604470871,Sce_merria:0.2810528742):0.0901162524,(Sce_jarrov:0.1865730336,Sce_occide:0.1230401331):0.0498876628):0.1786270431):0.0180430352):0.0069311285,CAS229140:0.0699686342):0.0075615268,JWA470:0.0644056098):0.0066537998,(JWA338:0.0524849343,MVZ237413:0.0584057223):0.0117278867):0.0346745555,MVZ241596:0.0191316139):0.0042614923,(SGR3:0.0004963963,SGR4:0.0000010312):0.0267929950):0.0167193620,(((DED075:0.0000010312,TJH2880:0.0004844414):0.0033130326,(LAF10450:0.0004781855,((TJH2840:0.0004784985,TJH2846:0.0000010312):0.0004779865,TX2011_241:0.0000010312):0.0000010312):0.0021075355):0.0009145522,TJH2918:0.0027746279):0.0020434763):0.0010415665,(((((DJL286:0.0000010312,ESP9606:0.0004804509):0.0000010312,(ESP9325:0.0000010312,TCWC92573:0.0000010312):0.0019334169):0.0004807291,(((ESP9186:0.0004793486,TCWC94831:0.0009570176):0.0000010312,(ESP9196:0.0000010312,(((ESP9208:0.0004794064,NM12_09:0.0004785635):0.0000010312,(ESP9232:0.0004783436,MSB57684:0.0004793020):0.0000010312):0.0000010312,((ESP9417:0.0004800557,NM12_04:0.0004793049):0.0000010312,MTH468:0.0000010312):0.0000010312):0.0000010312):0.0000010312):0.0000010312,NM12_07:0.0004800464):0.0009606782):0.0000010312,((((((DJL297:0.0009641317,ESP9057:0.0004810690):0.0000010312,(((((((ESP9064:0.0000010312,SCAR31:0.0004782657):0.0004780562,SCAR34:0.0009585655):0.0000010312,SCAR35:0.0009562672):0.0004791577,MTH472:0.0004797674):0.0000010312,((((MTH469:0.0000010312,SCAR33:0.0000010312):0.0000010312,MTH490:0.0000010312):0.0000010312,SAR0200:0.0004832269):0.0000010312,SCAR09:0.0014499247):0.0004803742):0.0000010312,(((((MTH470:0.0000010312,SAR0003:0.0004801699):0.0000010312,MTH489:0.0000010312):0.0000010312,SCAR08:0.0004800196):0.0004797581,(MTH474:0.0000010312,MTH478:0.0004860324):0.0004796020):0.0000010312,MTH475:0.0000010312):0.0000010312):0.0000010312,(ESP9179:0.0004785859,(((ESP9261:0.0004792805,ESP9273:0.0004800653):0.0000010312,ESP9264:0.0000010312):0.0000010312,ESP9480:0.0004801515):0.0000010312):0.0004794007):0.0009608069):0.0000010312,SAR0227:0.0000010312):0.0000010312,ESP9070:0.0000010312):0.0000010312,((((ESP9174:0.0000010312,NM12_08:0.0004804078):0.0000010312,(MTH270:0.0004950387,MTH275:0.0000010312):0.0004954475):0.0009608269,ESP9557:0.0009616046):0.0000010312,((((MSB57694:0.0009632771,SAR0229:0.0000010312):0.0000010312,SAR0226:0.0000010312):0.0000010312,MSB57705:0.0000010312):0.0000010312,SAR0023:0.0000010312):0.0000010312):0.0000010312):0.0000010312,(ESP9485:0.0004810094,SAR0361:0.0000010312):0.0000010312):0.0000010312):0.0004812723,TCWC93505:0.0004856744):0.0009821531):0.0014469471,(TJH2927:0.0024051923,(TJH2939:0.0004786698,(TX2011_286:0.0000010312,TX2012_001:0.0004787463):0.0000010312):0.0004782572):0.0000010312):0.0009580742,(ESP9451:0.0019676312,SCAR10_2:0.0014766052):0.0009528200):0.0004804913,(ESP9245:0.0004771470,SAR0264:0.0000010312):0.0004788758):0.0000010312,(DED051:0.0004798333,ESP9258:0.0004806996):0.0000010312):0.0000010312,DED046:0.0000010312):0.0000010312,SAR0259:0.0000010312):0.0000010312,(((((CSA043:0.0000010312,CSA061:0.0004780170):0.0000010312,TJH2984:0.0009571975):0.0004786479,(TJH2966:0.0004795405,TJH3000:0.0000010312):0.0000010312):0.0004754275,(CSA059:0.0004831217,(TJH2971:0.0000010312,TJH3033:0.0009681111):0.0000010312):0.0019390869):0.0004848491,(DL916:0.0000010312,(SAR0261:0.0000010312,SAR0262:0.0000010312):0.0000010312):0.0009606206):0.0000010312):0.0000010312,DED049:0.0000010312):0.0004799475,(SAR0204:0.0009584172,TCWC91345:0.0004789843):0.0000010312):0.0000010312,(DJL872:0.0004799317,ESP9357:0.0004793030):0.0000010312):0.0000010312,DJL868:0.0000010312):0.0000010312,(ESP9147:0.0004791011,SAR0351:0.0000010312):0.0000010312):0.0000010312,((((DJL870:0.0000010312,ESP9351:0.0004800189):0.0004790359,(ESP9340:0.0004802210,(SAR0381:0.0000010312,SAR0383:0.0000010312):0.0004801550):0.0004786617):0.0000010312,(DJL878:0.0009603200,ESP9621:0.0004790286):0.0000010312):0.0000010312,DL914:0.0000010312):0.0000010312):0.0000010312,((LMC10_02:0.0009597600,SAR0379:0.0004811914):0.0000010312,SAR0252:0.0000010312):0.0000010312):0.0000010312,(ESP9092:0.0000010312,ESP9202:0.0000010312):0.0004800826):0.0000010312,DJL869:0.0004789235):0.0004783168,DL902:0.0014309978);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t mtDNA.treefile -p mtDNA.best_model.nex
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s mtDNA_concat.fasta --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s mtDNA_concat.fasta --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Mon Nov  3 12:28:12 2025
+Total CPU time used: 263.463 seconds (0h:4m:23s)
+Total wall-clock time used: 97.1748 seconds (0h:1m:37s)
+

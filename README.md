@@ -156,29 +156,37 @@ Finally, we concatenate the alignments using AMAS. With the following command we
 python -m amas.AMAS concat \
   -i cytb.aln.fasta nd1.aln.fasta \
   -f fasta -d dna \
-  -u fasta -t mtDNA_concat.fasta \
+  -u fasta -t mtDNA_concat.fasta \ #ran a second time for the second output
   -u nexus -t mtDNA_concat.nex \
   -p mtDNA_partitions_by_gene.txt
 ```
+> **Note:** You can specify the output partition format with `--part-format raxml`
 
 ## Model selection
 
 As done in Chan et al. 2020, we define 6 diferent partitions, by codon position and by gene.
 
 ```bash
-python -m amas.AMAS -h
-
+echo 'DNA, cytb_pos1 = 1-1128\3
+DNA, cytb_pos2 = 2-1128\3
+DNA, cytb_pos3 = 3-1128\3
+DNA, nd1_pos1  = 1129-2097\3
+DNA, nd1_pos2  = 1130-2097\3
+DNA, nd1_pos3  = 1131-2097\3' > mtDNA_partitions_codon.txt
 ```
 
 Next, we use iqtree's implementation of ModelFinder to select the best models for each partition
 
 ```bash
-iqtree2 -s mtDNA_concat.fasta \
-        -p mtDNA_partitions_by_codon.txt \
-        -m MFP -BIC -T AUTO \
-        --prefix mtDNA_mfp
+iqtree2 --prefix mtDNA \
+        -s mtDNA_concat.fasta \
+        -p mtDNA_partitions_codon.txt \
+        -m MFP --merit BIC -T AUTO \
+        -mset mrbayes
 
 ```
-
+* -m for ModelFinder and not tree inference
+* BIC penalizes more extra params than AIC
+* mset mrbayes restricts models to those present in MrBayes
 
 ## Script cleanup.py
