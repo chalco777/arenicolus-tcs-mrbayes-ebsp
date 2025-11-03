@@ -116,7 +116,7 @@ ND1: --auto chose L-INS-i (“Probably most accurate, very slow”), which uses 
 cyt-b: --auto chose FFT-NS-i (this is the standard strategy with iterative refinement). It is normal for this alignment size to opt for this faster option.
 123 seq × 1150 pb
 
-## Alignment trimming
+## Alignment trimming and concatenation
 
 For the NAD1 gene we decided to keep the alignment as it was, with very few gaps and mostly complete
 
@@ -150,6 +150,35 @@ trimal -in cytochrome_b.aln.fasta \
 gaps and missing characters as missing data. Thus, gaps and missing characters
 will not contribute any phylogenetic information.
 
-## Alignment concatenation
+Finally, we concatenate the alignments using AMAS. With the following command we get the final alignment in fasta and nexus, as well as the necessary partitions file for running ModelFinder in iqtree
+
+```bash
+python -m amas.AMAS concat \
+  -i cytb.aln.fasta nd1.aln.fasta \
+  -f fasta -d dna \
+  -u fasta -t mtDNA_concat.fasta \
+  -u nexus -t mtDNA_concat.nex \
+  -p mtDNA_partitions_by_gene.txt
+```
+
+## Model selection
+
+As done in Chan et al. 2020, we define 6 diferent partitions, by codon position and by gene.
+
+```bash
+python -m amas.AMAS -h
+
+```
+
+Next, we use iqtree's implementation of ModelFinder to select the best models for each partition
+
+```bash
+iqtree2 -s mtDNA_concat.fasta \
+        -p mtDNA_partitions_by_codon.txt \
+        -m MFP -BIC -T AUTO \
+        --prefix mtDNA_mfp
+
+```
+
 
 ## Script cleanup.py
