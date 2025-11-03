@@ -1,0 +1,630 @@
+LOCUS       MT795451                 341 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate CSA037_1 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795451
+VERSION     MT795451.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..341
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="CSA037_1"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..341
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gaccacaaag gagcatattt cactgtaaaa cagcttttac tgtcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaacat
+      301 ttctatcgtg atatctctta atcttccctt cccaaggcta a
+//
+LOCUS       MT795452                 341 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate CSA037_2 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795452
+VERSION     MT795452.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..341
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="CSA037_2"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..341
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gaccacaaag gagcatattt cactgtaaaa cagcttttac tgtcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcgtc aatatgacac cccttcaaat atttaaacat
+      301 ttctatcgtg atatctctta atcttccctt cccaaggcta a
+//
+LOCUS       MT795453                 341 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate CSA041_1 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795453
+VERSION     MT795453.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..341
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="CSA041_1"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..341
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gactacaaag gagcatattt cactgtaaaa cagcttttac tgtcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaatat
+      301 tcctatcgtg atatctctta atcttccctt cccaaggcta a
+//
+LOCUS       MT795454                 341 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate CSA042_1 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795454
+VERSION     MT795454.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..341
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="CSA042_1"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..341
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gaccacaaag gagcatattt cactgtaaaa cagcttttac tgtcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaatat
+      301 tcctatcgtg atatctctta atcttccctt cccaaggcta a
+//
+LOCUS       MT795455                 341 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate DED015_1 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795455
+VERSION     MT795455.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..341
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="DED015_1"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..341
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gactacaaag gagcatattt cactgtaaaa cagcttttac tggcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaacat
+      301 ttctatcgtg atatctctta atcttccctt cccaaggcta a
+//
+LOCUS       MT795456                 340 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate DL915_2 anonymous nuclear marker locus
+            scar298anl genomic sequence.
+ACCESSION   MT795456
+VERSION     MT795456.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 340)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 340)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..340
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="DL915_2"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..340
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gaccacaaag gagcatattt cactgtaaaa cagcttttac tgtcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaatat
+      301 tcctatcgtg atatctctta atcttccctt cccaaggcnt
+//
+LOCUS       MT795457                 340 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate ESP9137_2 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795457
+VERSION     MT795457.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 340)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 340)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..340
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="ESP9137_2"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..340
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gactacaaag gagcatattt cactgtaaaa cagcttttac tgtcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaatat
+      301 tcctatcgtg atatctctta atcttccctt cccaaggcnt
+//
+LOCUS       MT795458                 340 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate ESP9143_2 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795458
+VERSION     MT795458.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 340)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 340)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..340
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="ESP9143_2"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..340
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gaccacaaag gagcatattt cactgtaaaa cagcttttac tgtcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaacat
+      301 ttctatcgtg atatctctta atcttccctt cccaaggcnt
+//
+LOCUS       MT795459                 341 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate ESP9152_2 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795459
+VERSION     MT795459.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..341
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="ESP9152_2"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..341
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gactacaaag gagcatattt cactgtaaaa cagcttttac tgtcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgt
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaatat
+      301 tcctatcgtg atatctctta atcttccctt cccaaggcta a
+//
+LOCUS       MT795460                 341 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate ESP9232_1 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795460
+VERSION     MT795460.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..341
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="ESP9232_1"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..341
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gaccacaaag gagcatattt cactgtaaaa cagcttttac tgtcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaacat
+      301 ttctatcgtg atatctctta atcttccctt tcccaaggct a
+//
+LOCUS       MT795461                 341 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate MTH270_1 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795461
+VERSION     MT795461.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..341
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="MTH270_1"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..341
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gaccacaaag gagcatattt cactgtaaaa cagcttttac tgccaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaacat
+      301 ttctatcgtg atatctctta atcttccctt cccaaggcta a
+//
+LOCUS       MT795462                 340 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate MTH472_2 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795462
+VERSION     MT795462.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 340)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 340)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..340
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="MTH472_2"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..340
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gactacaaag gagcatattt cactgtaaaa cagcttttac tggcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaacat
+      301 ttctatcgtg atatctctta atcttccctt cccaaggcnt
+//
+LOCUS       MT795463                 341 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate SAR307_1 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795463
+VERSION     MT795463.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..341
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="SAR307_1"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..341
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttgtt taaaaatctc caaaggagaa gactccacca
+      121 gaccacaaag gagcatattt cactgtaaaa cagcttttac tgtcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaatat
+      301 tcctattgtg atatctctta atcttccctt cccaaggcta a
+//
+LOCUS       MT795464                 341 bp    DNA     linear   VRT 19-OCT-2020
+DEFINITION  Sceloporus arenicolus isolate TX2011_286_2 anonymous nuclear marker
+            locus scar298anl genomic sequence.
+ACCESSION   MT795464
+VERSION     MT795464.1
+KEYWORDS    .
+SOURCE      Sceloporus arenicolus (Dunes sagebrush lizard)
+  ORGANISM  Sceloporus arenicolus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Lepidosauria; Squamata; Bifurcata; Unidentata; Episquamata;
+            Toxicofera; Iguania; Phrynosomatidae; Phrynosomatinae; Sceloporus.
+REFERENCE   1  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Phylogeographic structure of the dunes sagebrush lizard, an endemic
+            habitat specialist
+  JOURNAL   PLoS One 15 (9), e0238194 (2020)
+   PUBMED   32936819
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 341)
+  AUTHORS   Chan,L.M., Painter,C.W., Hill,M.T., Hibbitts,T.J., Leavitt,D.J.,
+            Ryberg,W.A., Walkup,D. and Fitzgerald,L.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-JUL-2020) Biology, Pacific University, 2043 College
+            Way, Forest Grove, OR 97116, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..341
+                     /organism="Sceloporus arenicolus"
+                     /mol_type="genomic DNA"
+                     /isolate="TX2011_286_2"
+                     /db_xref="taxon:59693"
+                     /geo_loc_name="USA"
+     misc_feature    1..341
+                     /note="anonymous nuclear marker locus scar298anl"
+ORIGIN
+        1 acagagttgg aatggccatc cagttcaacc cccatcatgc aggaatacac aacccaacca
+       61 ctcctgatag gtggccatcc agcctttctt taaaaatctc caaaggagaa gactccacca
+      121 gactacaaag gagcatattt cactgtaaaa cagcttttac tggcaggaca tccctcctaa
+      181 tgtttaggcg gaatctcttt tcctgtagtt cgaatccatt actctggtcc cattctctgg
+      241 agctgcagga aagaagcttg caccatcctc aatatgacac cccttcaaat atttaaacat
+      301 ttctatcgtg atatctctta atcttccctt cccaaggcta a
+//
