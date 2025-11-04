@@ -143,6 +143,9 @@ begin mrbayes;
     charset nd1_pos2  = 1130-2097\3;
     charset nd1_pos3  = 1131-2097\3;
     
+	partition parts = 6: cytb_pos1, cytb_pos2, cytb_pos3, nd1_pos1, nd1_pos2, nd1_pos3;
+	set partition=parts;
+
 	lset applyto=(1) nst=6 rates=gamma ngammacat=4;
     prset applyto=(1) statefreqpr=fixed(equal);
 
