@@ -200,4 +200,9 @@ iqtree2 --prefix mtDNA \
 
 The selected best model for each partition, together with the commands for Mr Bayes, were added at the end of mtDNA_concat.nex
 
+```bash
+mb
+```
+
+
 ## Script cleanup.py
