@@ -8,6 +8,7 @@
 
 ## Initial inspection
 
+```bash
 $ grep -c '^>' *.fasta
 cytochrome_b.fasta:108
 nd1.fasta:108
@@ -25,7 +26,7 @@ $grep '^>' cytochrome_b.fasta | tail -n 3
 >MT795424.1 Sceloporus arenicolus isolate TX2011.241 cytochrome b gene, partial cds; mitochondrial
 >MT795425.1 Sceloporus arenicolus isolate TX2011.286 cytochrome b gene, partial cds; mitochondrial
 >MT795426.1 Sceloporus arenicolus isolate TX2012.001 cytochrome b gene, partial cds; mitochondrial
-
+```
 
 ## Getting the Outgroups
 
