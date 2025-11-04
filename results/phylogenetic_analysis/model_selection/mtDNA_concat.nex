@@ -131,3 +131,41 @@ BEGIN DATA;
 ;
 
 END;
+
+begin mrbayes;
+
+    set autoclose=yes nowarn=yes;
+	
+	charset cytb_pos1 = 1-1128\3;
+    charset cytb_pos2 = 2-1128\3;
+    charset cytb_pos3 = 3-1128\3;
+    charset nd1_pos1  = 1129-2097\3;
+    charset nd1_pos2  = 1130-2097\3;
+    charset nd1_pos3  = 1131-2097\3;
+    
+	lset applyto=(1) nst=6 rates=gamma ngammacat=4;
+    prset applyto=(1) statefreqpr=fixed(equal);
+
+	lset applyto=(2) nst=2 rates=invgamma ngammacat=4;
+    prset applyto=(2) statefreqpr=fixed(0.199144,0.252673,0.132357,0.415826);
+
+	lset applyto=(3) nst=2 rates=gamma ngammacat=4;
+    prset applyto=(3) statefreqpr=fixed(0.425796,0.312137,0.0678474,0.194219);
+	
+	lset applyto=(4) nst=6 rates=gamma ngammacat=4;
+    prset applyto=(4) statefreqpr=fixed(equal);
+
+	lset applyto=(5) nst=2 rates=propinv;
+    prset applyto=(5) statefreqpr=fixed(0.180039,0.278883,0.120657,0.42042);
+
+	lset applyto=(6) nst=2 rates=invgamma ngammacat=4;
+    prset applyto=(6) statefreqpr=fixed(0.515578,0.233842,0.0507978,0.199783);
+
+	unlink revmat=(all) statefreq=(all) shape=(all) pinvar=(all) tratio=(all);
+    prset ratepr=variable;
+
+    mcmcp ngen=50000000 nruns=2 nchains=4 printfreq=5000 samplefreq=5000 diagnfreq=50000 burninfrac=0.25;
+    mcmc;
+    sump; sumt;
+
+end;

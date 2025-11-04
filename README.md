@@ -175,7 +175,7 @@ DNA, nd1_pos2  = 1130-2097\3
 DNA, nd1_pos3  = 1131-2097\3' > mtDNA_partitions_codon.txt
 ```
 
-Next, we use iqtree's implementation of ModelFinder to select the best models for each partition
+Next, we use iqtree's implementation of ModelFinder to select the best models for each partition, using BIC as our criterion
 
 ```bash
 iqtree2 --prefix mtDNA \
@@ -184,9 +184,19 @@ iqtree2 --prefix mtDNA \
         -m MFP --merit BIC -T AUTO \
         -mset mrbayes
 
+# Another tested
+
+iqtree2 --prefix mtDNA \
+        -s mtDNA_concat.fasta \
+        -p mtDNA_partitions_codon.txt \
+        -m MFP --merit AIC -T AUTO \
+        -mset mrbayes
+
 ```
-* -m for ModelFinder and not tree inference
+* -m for ModelFinder and tree inference
 * BIC penalizes more extra params than AIC
 * mset mrbayes restricts models to those present in MrBayes
+
+The selected best model for each partition, together with the commands for Mr Bayes, were added at the end of mtDNA_concat.nex
 
 ## Script cleanup.py
