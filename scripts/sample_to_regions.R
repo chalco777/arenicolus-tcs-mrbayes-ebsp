@@ -1,0 +1,41 @@
+### This script reads the Genepop file, extracts the samples from each block, and assigns them to the regions as per the paper
+
+# 1. Read genpop file
+gen_lines <- readLines("../data/microsatellite_genotypes.gen.txt")
+
+# 2. We find the positions where 'Pop' appears to identify the blocks
+pop_idx <- grep("^\\s*[Pp][Oo][Pp]\\s*$", gen_lines)
+
+# 3. We create a list to hold the sample IDs for each population block
+pop_samples <- list()
+# 4. We walk through the lines between the "Pop"s to get the IDs
+for(i in seq_along(pop_idx)) {
+  start_line <- pop_idx[i] + 1
+  end_line   <- if(i < length(pop_idx)) pop_idx[i+1] - 1 else length(gen_lines)
+  block      <- gen_lines[start_line:end_line]
+  # Mantener solo las líneas con coma (cada línea de individuo tiene una coma)
+  block      <- block[grepl(",", block)]
+  ids <- sub("\\s*,.*$", "", block)   # eliminar todo lo que sigue a la coma
+  ids <- trimws(ids)                  # eliminar espacios al inicio/final
+  pop_samples[[i]] <- ids
+}
+
+# 5. We define the vector of Regions according to the paper's order
+regions <- c("AA","AB","BA","BB","C","DA","DB","EA","EB","EC")
+
+# 6. We made a df according to each sample and its region
+sample_region <- data.frame(
+  sample = unlist(pop_samples),
+  region = rep(regions, sapply(pop_samples, length)),
+  stringsAsFactors = FALSE
+)
+
+# 7. Finally, we save and write the table
+write.table(sample_region, file="../data/sample_to_region.tsv",
+            sep="\t", row.names=FALSE, quote=FALSE)
+
+# Just to check how many of our mtDNA seq are in the genpop file
+fasta_ids <- sub("^>","", grep("^>", readLines("mtDNA_concat.fasta"), value=TRUE))
+intersect_ids <- intersect(fasta_ids, sample_region$sample)
+cat("mtDNA seqs present in both files:", length(intersect_ids), "\n")
+cat("mtDNA seqs present only in the FASTA alignment:", length(setdiff(fasta_ids, sample_region$sample)), "\n")

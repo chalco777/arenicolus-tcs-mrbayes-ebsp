@@ -198,11 +198,46 @@ iqtree2 --prefix mtDNA \
 * BIC penalizes more extra params than AIC
 * mset mrbayes restricts models to those present in MrBayes
 
-The selected best model for each partition, together with the commands for Mr Bayes, were added at the end of mtDNA_concat.nex
+The selected best model for each partition, together with the commands for Mr Bayes, were added at the end of [mtDNA_concat.nex](results/phylogenetic_analysis/model_selection/mtDNA_concat.nex)
 
 ```bash
 mb
 ```
 
+> **Note:** In the context of explaining the analysis of primates.nexus mitochondrial seq, MrBayes manual mentions: The Code setting is only relevant if the Nucmodel is set to Codon. The Ploidy setting is also irrelevant for us. 
 
-## Script cleanup.py
+## MrBayes and ML
+
+
+Using ML
+
+```bash
+iqtree2 \
+  --prefix mtDNA_ML \
+  -s mtDNA_concat.fasta \
+  -p mtDNA_partitions_codon.txt \
+  -m MFP --merit BIC \
+  -B 1000 --bnni \
+  -T AUTO -seed 20251104
+
+```
+Revisar log
+
+## DNAsp and R diversity stats:
+
+For these analysis only individuals present in the GenPop file (that is, those with microsatellite data) were able to be considered. The regions for each sample were extracted from the microsatellite_genotypes.gen.txt file using the script [sample_to_regions.R](scripts/sample_to_regions.R). For individuals who do not appear in Genepop, there is no public list in the supplementary materials that assigns their regions. These are likely to be:
+
+* Individuals sequenced only for mtDNA (without microsatellite genotypes), including several outgroups such as Phr_corona, museum specimens (CAS, MVZ, MSB, etc.), and old catches.
+* Individuals with no location information or incomplete data, which were therefore excluded from the structure analyses.
+
+
+
+
+(Luego replicar para loci nucleares)
+
+Count number of PI sites. They used PAUP. I will use iqtree result
+
+mtDNA_concat.fasta->They count # of Haplotypes, S (segregating sites), pi (nucleotide div) and k (avg. pairwise diff). I will use DivGenSeq.R (or ape+pegas)
+
+Redes de haplotipos TCS network
+Alineamiento->Debo generar un nex con haplotipos y con los tags y de donde viene aca haplotipo ps, o sea a qué tag pertence. Parece que ella lo genero desde DNAsp ese nex
