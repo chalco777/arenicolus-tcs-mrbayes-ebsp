@@ -1,0 +1,46 @@
+ DnaSP  Ver. 6.12.03                        05 - November - 2025  1:58:40 PM
+ ===========================================================================
+
+
+ DNA Polymorphism
+ ----------------
+
+ Input Data File: C:\...\mtDNA_concat.nex
+ Number of sequences: 123    Number of sequences used: 123
+ Selected region: 1-2097   Number of sites: 2097
+ Total number of sites (excluding sites with gaps / missing data): 1552
+
+ Number of polymorphic (segregating) sites, S: 658
+ Total number of mutations, Eta: 956
+
+ Number of Haplotypes, h: 90
+ Haplotype (gene) diversity, Hd: 0.987
+    Variance of Haplotype diversity: 0.00002
+       Standard Deviation of Haplotype diversity: 0.004
+
+ Nucleotide diversity, Pi: 0.03348
+ Theta (per site) from Eta: 0.11438
+
+ Theta (per site) from S, Theta-W: 0.07873
+    Variance of theta (no recombination): 0.0003400
+       Standard deviation of theta (no recombination): 0.01844
+    Variance of theta (free recombination): 0.0000094
+       Standard deviation of theta (free recombination): 0.00307
+
+ Finite Sites Model 
+    Theta (per site) from Pi: 0.03505
+    Theta (per site) from S: 0.10250
+    Theta (per site) from Eta: 0.13350
+
+ Average number of nucleotide differences, k: 51.965
+    Stochastic variance of k (no recombination), Vst(k): 503.627
+    Sampling variance of k (no recombination), Vs(k): 8.353
+       Total variance of k (no recombination), V(k): 511.981
+    Stochastic variance of k (free recombination), Vst(k): 17.322
+    Sampling variance of k (free recombination), Vs(k): 0.284
+       Total variance of k (free recombination), V(k): 17.606
+
+ Theta (per sequence) from S, Theta-W: 122.184
+    Variance of theta (no recombination): 819.006
+    Variance of theta (free recombination): 22.688
+

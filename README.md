@@ -240,7 +240,22 @@ python reverse_collapse_cleanup.py \
     --counts ../data/sample_to_region_mtDNA.tsv \
     --output ../results/haplotypes/diversity_stats/mtDNA_concat_reversed.nex
 ```
-Our new matrix has 223x2097 bp, in contrast with theirs, that had 225x2097 bp. Hower, it's much more close than our previous, deduplicated matrix of 123x2097 bp.
+Our new matrix has 223x2097 bp, in contrast with theirs, that had 225x2097 bp. Hower, it's much more close than our previous, deduplicated matrix of 123x2097 bp. We will compare both, our dedup and our regenerated original, with the original, not deduplicated, matrix of Chan.
+
+For diversity stats, we removed outgroups with AMAS:
+
+```bash
+TAXA="JWA338 JWA470 Phr_corona SGR4 SGR3 Sce_jarrov Sce_merria Sce_occide Uro_ornatu Uta_stansb MVZ149956 MVZ237413 MVZ241596 CAS223822 CAS229140"
+
+amas remove -d dna -f nexus -i mtDNA_concat.nex -x $TAXA -u nexus -g tmp_
+mv tmp_mtDNA_concat.nex-out.nex alignment_filtered/mtDNA_concat_filtered.nex
+
+TAXA_REV="JWA338_1 JWA470_1 Phr_corona_1 SGR4_1 SGR3_1 Sce_jarrov_1 Sce_merria_1 Sce_occide_1 Uro_ornatu_1 Uta_stansb_1 MVZ149956_1 MVZ237413_1 MVZ241596_1 CAS223822_1 CAS229140_1"
+
+# mtDNA_concat_reversed.nex -> NEXUS filtrado
+amas remove -d dna -f nexus -i mtDNA_concat_reversed.nex -x $TAXA_REV -u nexus -g tmp_
+mv tmp_mtDNA_concat_reversed.nex-out.nex alignment_filtered/mtDNA_concat_reversed_filtered.nex
+```
 
 
 (Luego replicar para loci nucleares)

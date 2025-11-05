@@ -12,7 +12,7 @@ distinguish the replicated records.
 
 Usage (example):
     python reverse_collapse_cleanup.py \
-        -i ../results/phylogenetic_analysis/model_selection/mtDNA_concat.nex \
+        -i ../results/phylogenetic_analysis/alignment/mtDNA_concat.nex \
         --counts ../data/sample_to_region_mtDNA.tsv \
         --output ../results/haplotypes/diversity_stats/mtDNA_concat_reversed.nex
 

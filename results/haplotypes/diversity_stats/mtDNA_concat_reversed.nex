@@ -1,7 +1,7 @@
 #NEXUS
 begin data;
 dimensions ntax=223 nchar=2097;
-format datatype=dna missing=? gap=N interleave;
+format datatype=dna missing=N gap=- interleave;
 matrix
 2010_7_1     CGTAAATCCCACCCAATCATAAAAATTGTAAACAACTCATTCATTGACCTTCCCACTCCATCCAATATCT
 2010_7_2     CGTAAATCCCACCCAATCATAAAAATTGTAAACAACTCATTCATTGACCTTCCCACTCCATCCAATATCT
