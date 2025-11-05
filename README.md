@@ -225,13 +225,19 @@ Revisar log
 
 ## DNAsp and R diversity stats:
 
-For these analysis only individuals present in the GenPop file (that is, those with microsatellite data) were able to be considered. The regions for each sample were extracted from the microsatellite_genotypes.gen.txt file using the script [sample_to_regions.R](scripts/sample_to_regions.R). For individuals who do not appear in Genepop, there is no public list in the supplementary materials that assigns their regions. These are likely to be:
+For these analyses only individuals present in the GenPop file (that is, those with microsatellite data) had the specific sample region. The regions for each sample were extracted from the microsatellite_genotypes.gen.txt file using the (first section of the) script [sample_to_regions.R](scripts/sample_to_regions.R). For individuals who do not appear in Genepop, there is no public list in the supplementary materials that assigns their regions. These are likely to be:
 
 * Individuals sequenced only for mtDNA (without microsatellite genotypes), including several outgroups such as Phr_corona, museum specimens (CAS, MVZ, MSB, etc.), and old catches.
 * Individuals with no location information or incomplete data, which were therefore excluded from the structure analyses.
 
+It is worth noting that for calculating S, pi, number of haplotypes and K, from the concatenated mitochondrial alignment they used the previous, not deduplicated alignment. Thus, to try to replicate the original DNAsp stats from the concatenated alignment, we first generated the [sample_to_region_mtDNA.tsv](data/sample_to_region_mtDNA.tsv) file using the second section of [sample_to_regions.R](scripts/sample_to_regions.R). This file only had the regions for the sample ids that also happened to be sequenced for microsatellites. Then we manually annotated the count for each sample id (or voucher) from the Figure 3 in Chan et al. 2020. We also tried to complete the regions that were not given using that phylogenetic tree. 
+
+After that, we used the count for each mitochondrial sequence (or haplotype) together with the script (.py)[] for regenerated their original, not deduplicated, alignment. Although our matrix has 223x2097 bp, in contrast with theirs, that had 225x2097 bp.
 
 
+
+ellos dicen 
+225 seq en su alineamiento mitocondrial!!
 
 (Luego replicar para loci nucleares)
 

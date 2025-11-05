@@ -1,4 +1,6 @@
-### This script reads the Genepop file, extracts the samples from each block, and assigns them to the regions as per the paper
+
+# I. First section
+### This script reads the Genepop file, extracts the samples from each block, and assigns them to the regions as per the paper. This analysis corresponds only to microsatellite data.
 
 # 1. Read genpop file
 gen_lines <- readLines("../data/microsatellite_genotypes.gen.txt")
@@ -25,31 +27,25 @@ regions <- c("AA","AB","BA","BB","C","DA","DB","EA","EB","EC")
 
 # 6. We made a df according to each sample and its region
 sample_region <- data.frame(
-  sample = unlist(pop_samples),
+  sample_norm = unlist(pop_samples),
   region = rep(regions, sapply(pop_samples, length)),
   stringsAsFactors = FALSE
 )
 
 # 7. Finally, we save and write the table
-write.table(sample_region, file="../data/sample_to_region.tsv",
+write.table(sample_region, file="../data/sample_to_region_microsatellite.tsv",
             sep="\t", row.names=FALSE, quote=FALSE)
 
-# Just to check how many of our mtDNA seq are in the genpop file
+
+
+# II. Second section
+## Now, we will make a tsv file that consists of a draft of sample_to_region_mtDNA.tsv, with all the samples from our mtDNA alignment file and their corresponding region (only if available from the genepop data). 
+
 fasta_ids_raw <- sub("^>", "", grep("^>", readLines("../results/phylogenetic_analysis/ml/mtDNA_concat.fasta"), value = TRUE))
 fasta_ids     <- gsub("_", "", fasta_ids_raw)
 
 genepop_ids <- sample_region$sample
-print("before dedup")
-print(length(fasta_ids))
-print(length(genepop_ids))
 
-# We deduplicate both lists
-fasta_ids   <- unique(fasta_ids)
-genepop_ids <- unique(genepop_ids)
-
-print("afterdedup")
-print(length(fasta_ids))
-print(length(genepop_ids))
 
 common_ids      <- intersect(fasta_ids, genepop_ids)
 only_fasta       <- setdiff(fasta_ids, genepop_ids)
@@ -63,12 +59,27 @@ if (length(only_fasta)) print(only_fasta)
 cat("IDs solo en Genepop:", length(only_genepop), "\n")
 if (length(only_genepop)) print(only_genepop)
 
+#Base table with all fasta ids
 
+mtDNA_all <- data.frame(
+  sample      = fasta_ids_raw,
+  sample_norm = fasta_ids,     # for the comparison (without _)
+  stringsAsFactors = FALSE
+)
+print("Here")
+# We join by the normalised name to bring the region
+mtDNA_all <- merge(
+  mtDNA_all,
+  sample_region[, c("sample_norm", "region")],
+  by = "sample_norm",
+  all.x = TRUE
+)
 
+mtDNA_all <- mtDNA_all[, c("sample", "region")]
+mtDNA_all <- mtDNA_all[order(mtDNA_all$region), ]
 
+write.table(mtDNA_all, file = "../data/sample_to_region_mtDNA.tsv",
+            sep = "\t", row.names = FALSE, quote = FALSE)
 
-
-
-
-
-
+# Note that the rest of the samples without region where filled using the Figure 3 from Chan et al. 2020. The count of each sample was added based on that figure too.
+# The final manually edited file is  ""../data/sample_to_region_mtDNA.tsv", with the same name
