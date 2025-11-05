@@ -35,7 +35,40 @@ write.table(sample_region, file="../data/sample_to_region.tsv",
             sep="\t", row.names=FALSE, quote=FALSE)
 
 # Just to check how many of our mtDNA seq are in the genpop file
-fasta_ids <- sub("^>","", grep("^>", readLines("mtDNA_concat.fasta"), value=TRUE))
-intersect_ids <- intersect(fasta_ids, sample_region$sample)
-cat("mtDNA seqs present in both files:", length(intersect_ids), "\n")
-cat("mtDNA seqs present only in the FASTA alignment:", length(setdiff(fasta_ids, sample_region$sample)), "\n")
+fasta_ids_raw <- sub("^>", "", grep("^>", readLines("../results/phylogenetic_analysis/ml/mtDNA_concat.fasta"), value = TRUE))
+fasta_ids     <- gsub("_", "", fasta_ids_raw)
+
+genepop_ids <- sample_region$sample
+print("before dedup")
+print(length(fasta_ids))
+print(length(genepop_ids))
+
+# We deduplicate both lists
+fasta_ids   <- unique(fasta_ids)
+genepop_ids <- unique(genepop_ids)
+
+print("afterdedup")
+print(length(fasta_ids))
+print(length(genepop_ids))
+
+common_ids      <- intersect(fasta_ids, genepop_ids)
+only_fasta       <- setdiff(fasta_ids, genepop_ids)
+only_genepop     <- setdiff(genepop_ids, fasta_ids)
+
+
+cat("IDs en común (FASTA ∩ Genepop):", length(common_ids), "\n")
+cat("IDs solo en FASTA:", length(only_fasta), "\n")
+if (length(only_fasta)) print(only_fasta)
+
+cat("IDs solo en Genepop:", length(only_genepop), "\n")
+if (length(only_genepop)) print(only_genepop)
+
+
+
+
+
+
+
+
+
+
