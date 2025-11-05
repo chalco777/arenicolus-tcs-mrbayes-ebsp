@@ -5,300 +5,112 @@ knitr::opts_chunk$set(echo = TRUE)
 library(knitr)
 ```
 ```{r}
-library(ape)
-library(pegas)
+library(ape)     # read.dna, seg.sites, nuc.div (via pegas)
+library(pegas)   # haplotype, hap.div
 library(readr)
 library(dplyr)
 library(gt)
 
 ``` 
 
-# 1. Diversity parameters for mtDNA dataset with outgroups
 
-## Diversity stats for mtDNA deduplicated dataset with outgroups
 ```{r}
-aln <- read.dna("../results/phylogenetic_analysis/ml/mtDNA_concat.fasta", format="fasta")
-rownames(aln) <- gsub("_", "", rownames(aln))
-nrow(aln)
-ncol(aln)
-rownames(aln)[1:5]
-```
 
-## Global stats
-```{r}
-S_global  <- length(seg.sites(aln))            # sitios segregantes (S)
-pi_global <- nuc.div(aln)                      # diversidad nucleotídica (π)
-L_global  <- ncol(aln)                         # longitud del alineamiento
-k_global  <- pi_global * L_global              # diferencias promedio por par (k)
-haps      <- haplotype(aln)                    # haplotipos únicos
-nH_global <- nrow(haps)                        # número de haplotipos
-Hd_global <- hap.div(aln, variance = TRUE)     # diversidad haplotípica (Hd) (+ var.)
+DNA_sp_format <- function(aln) {
+  chars <- as.character(aln)                       # matriz de caracteres
+is_acgt_col <- apply(chars, 2, function(col) {   # TRUE if ALL the column is A/C/G/T
+  all(col %in% c("a","c","g","t","A","C","G","T"))
+})
+aln_cd <- aln[, is_acgt_col, drop = FALSE]       # keep only those columns
+  return(aln_cd)
+}
 
-S_global
-pi_global
-k_global
-nH_global
-Hd_global
-```
-
-## Save a pretty table
-```{r}
-tab_global <- data.frame(S = S_global,pi = pi_global,k  = k_global,n_haplotypes = nH_global,Hd = Hd_global[1], Hd_var = Hd_global[2])
-write.csv(tab_global, "../results/haplotypes/diversity_stats/mtDNA_stats_with_outgroups.csv", row.names = FALSE)
-tab_global
-
-# formateo: enteros y 3 decimales
-tab_global_fmt <- tab_global |> dplyr::mutate(
-    S = as.integer(S),
-    n_haplotypes = as.integer(n_haplotypes)
+calc_diversity <- function(aln) {
+  list(
+    S = length(seg.sites(aln)),
+    pi = nuc.div(aln),
+    k = nuc.div(aln) * ncol(aln),
+    n_haplotypes = nrow(haplotype(aln)),
+    Hd = hap.div(aln, variance = TRUE)
   )
+}
 
-gt_tbl <- gt(tab_global_fmt) |>
-  tab_header(
-    title = md("**mtDNA diversity summary (with outgroups)**"),
-    subtitle = "ND1 + Cyt-b (concatenated)"
-  ) |>
-  cols_label(
-    S            = "S (segregating sites)",
-    pi           = html("&pi; (nucleotide diversity)"),
-    k            = html("k (avg. pairwise differences)"),
-    n_haplotypes = "Unique haplotypes",
-    Hd           = html("H<sub>d</sub>"),
-    Hd_var       = html("Var(H<sub>d</sub>)")
-  ) |>
-  fmt_number(columns = c(pi, k, Hd, Hd_var), decimals = 3) |>
-  fmt_number(columns = c(S, n_haplotypes), decimals = 0) |>
-  tab_options(table.font.size = px(14))
+save_diversity_table <- function(stats_list, title, filename_base) {
+  tab <- data.frame(
+    Dataset = names(stats_list),
+    S = sapply(stats_list, function(x) x$S),
+    pi = sapply(stats_list, function(x) x$pi),
+    k = sapply(stats_list, function(x) x$k),
+    n_haplotypes = sapply(stats_list, function(x) x$n_haplotypes),
+    Hd = sapply(stats_list, function(x) x$Hd[1]),
+    Hd_var = sapply(stats_list, function(x) x$Hd[2])
+  )
+  
+  write.csv(tab, paste0("../results/haplotypes/diversity_stats/", filename_base, ".csv"), row.names = FALSE)
+  
+  tab_fmt <- tab |> dplyr::mutate(S = as.integer(S), n_haplotypes = as.integer(n_haplotypes))
+  
+  gt_tbl <- gt(tab_fmt) |>
+    tab_header(title = md(paste0("**", title, "**")), subtitle = "ND1 + Cyt-b (concatenated)") |>
+    cols_label(
+      Dataset = "Dataset",
+      S = html("S<br>(segregating<br>sites)"),
+      pi = html("&pi;"),
+      k = html("k<br>(avg. pairwise<br>differences)"),
+      n_haplotypes = html("Unique<br>haplotypes"),
+      Hd = html("H<sub>d</sub>"),
+      Hd_var = html("Var(H<sub>d</sub>)")
+    )   |>
+    fmt_number(columns = c(pi, k, Hd, Hd_var), decimals = 3) |>
+    fmt_number(columns = c(S, n_haplotypes), decimals = 0) |>
+    tab_style(
+      style = cell_text(align = "center"),
+      locations = cells_column_labels()
+    ) |>
+    tab_options(table.font.size = px(14))
+  
+  gtsave(gt_tbl, paste0("../results/haplotypes/diversity_stats/", filename_base, ".html"))
+  return(tab)
+}
 
-# guardar
-gtsave(gt_tbl, "../results/haplotypes/diversity_stats/mtDNA_stats_with_outgroups.html")
-# gtsave(gt_tbl, "../results/haplotypes/diversity_stats/mtDNA_stats_with_outgroups.png")  # requires webshot2 o chromote
 
 ```
 
-
-
-## Diversity stats for mtDNA not deduplicated dataset
+# 1. Diversity parameters for mtDNA without outgroups dataset
 
 ```{r}
-aln <- read.dna("../results/haplotypes/diversity_stats/mtDNA_concat_reversed.nex", format="nexus")
-rownames(aln) <- gsub("_", "", rownames(aln))
-nrow(aln)
-ncol(aln)
-rownames(aln)[1:5]
-```
+aln_dedup <- read.dna("../results/haplotypes/diversity_stats/alignment_filtered/mtDNA_concat_filtered.nex-out.fas", format="fasta")
+aln_dedup<- DNA_sp_format(aln_dedup)
 
-## Global stats
-```{r}
-S_global  <- length(seg.sites(aln))            # sitios segregantes (S)
-pi_global <- nuc.div(aln)                      # diversidad nucleotídica (π)
-L_global  <- ncol(aln)                         # longitud del alineamiento
-k_global  <- pi_global * L_global              # diferencias promedio por par (k)
-haps      <- haplotype(aln)                    # haplotipos únicos
-nH_global <- nrow(haps)                        # número de haplotipos
-Hd_global <- hap.div(aln, variance = TRUE)     # diversidad haplotípica (Hd) (+ var.)
-
-S_global
-pi_global
-k_global
-nH_global
-Hd_global
-```
-
-## Save a pretty table
-```{r}
-tab_global <- data.frame(
-  scope = "GLOBAL",
-  S = S_global,
-  pi = pi_global,
-  k  = k_global,
-  n_haplotypes = nH_global,
-  Hd = Hd_global[1],                   # valor
-  Hd_var = Hd_global[2]                # varianza
+aln_no_dedup <- read.dna("../results/haplotypes/diversity_stats/alignment_filtered/mtDNA_concat_reversed_filtered.nex-out.fas", format="fasta")
+aln_no_dedup <- DNA_sp_format(aln_no_dedup)
+stats_no_outgroups <- list(
+  "Deduplicated" = calc_diversity(aln_dedup),
+  "Not deduplicated" = calc_diversity(aln_no_dedup)
 )
-write.csv(tab_global, "../results/haplotypes/diversity_stats/mtDNA_stats_reversed_with_outgroups.csv", row.names = FALSE)
-tab_global
-
-# formateo: enteros y 3 decimales
-tab_global_fmt <- tab_global |>
-  dplyr::mutate(
-    S = as.integer(S),
-    n_haplotypes = as.integer(n_haplotypes)
-  )
-
-gt_tbl <- gt(tab_global_fmt) |>
-  tab_header(
-    title = md("**mtDNA diversity summary (GLOBAL)**"),
-    subtitle = "ND1 + Cyt-b (concatenated)"
-  ) |>
-  cols_label(
-    scope        = "Scope",
-    S            = "S (segregating sites)",
-    pi           = html("&pi; (nucleotide diversity)"),
-    k            = html("k (avg. pairwise differences)"),
-    n_haplotypes = "Unique haplotypes",
-    Hd           = html("H<sub>d</sub>"),
-    Hd_var       = html("Var(H<sub>d</sub>)")
-  ) |>
-  fmt_number(columns = c(pi, k, Hd, Hd_var), decimals = 3) |>
-  fmt_number(columns = c(S, n_haplotypes), decimals = 0) |>
-  tab_options(table.font.size = px(14))
-
-# guardar
-gtsave(gt_tbl, "../results/haplotypes/diversity_stats/mtDNA_stats_reversed_with_outgroups.html")
-# gtsave(gt_tbl, "../results/haplotypes/diversity_stats/mtDNA_stats_reversed_with_outgroups.png")  # requiressss webshot2 o chromote
-
+tab1 <- save_diversity_table(stats_no_outgroups, "mtDNA diversity summary (without outgroups)", "mtDNA_stats_no_outgroups")
+print(tab1)
 ```
 
-
-# 1. Diversity parameters for mtDNA dataset *without* outgroups
-
-## Diversity stats for mtDNA deduplicated dataset *without* outgroups
-```{r}
-aln <- read.dna("../results/phylogenetic_analysis/alignment_filtered/mtDNA_concat_filtered.fasta", format="fasta")
-rownames(aln) <- gsub("_", "", rownames(aln))
-nrow(aln)
-ncol(aln)
-rownames(aln)[1:5]
-```
-
-## Global stats
-```{r}
-S_global  <- length(seg.sites(aln))            # sitios segregantes (S)
-pi_global <- nuc.div(aln)                      # diversidad nucleotídica (π)
-L_global  <- ncol(aln)                         # longitud del alineamiento
-k_global  <- pi_global * L_global              # diferencias promedio por par (k)
-haps      <- haplotype(aln)                    # haplotipos únicos
-nH_global <- nrow(haps)                        # número de haplotipos
-Hd_global <- hap.div(aln, variance = TRUE)     # diversidad haplotípica (Hd) (+ var.)
-
-S_global
-pi_global
-k_global
-nH_global
-Hd_global
-```
-
-## Save a pretty table
-```{r}
-tab_global <- data.frame(S = S_global,pi = pi_global,k  = k_global,n_haplotypes = nH_global,Hd = Hd_global[1], Hd_var = Hd_global[2])
-write.csv(tab_global, "../results/haplotypes/diversity_stats/mtDNA_stats.csv", row.names = FALSE)
-tab_global
-
-# formateo: enteros y 3 decimales
-tab_global_fmt <- tab_global |> dplyr::mutate(
-    S = as.integer(S),
-    n_haplotypes = as.integer(n_haplotypes)
-  )
-
-gt_tbl <- gt(tab_global_fmt) |>
-  tab_header(
-    title = md("**mtDNA diversity summary**"),
-    subtitle = "ND1 + Cyt-b (concatenated)"
-  ) |>
-  cols_label(
-    S            = "S (segregating sites)",
-    pi           = html("&pi; (nucleotide diversity)"),
-    k            = html("k (avg. pairwise differences)"),
-    n_haplotypes = "Unique haplotypes",
-    Hd           = html("H<sub>d</sub>"),
-    Hd_var       = html("Var(H<sub>d</sub>)")
-  ) |>
-  fmt_number(columns = c(pi, k, Hd, Hd_var), decimals = 3) |>
-  fmt_number(columns = c(S, n_haplotypes), decimals = 0) |>
-  tab_options(table.font.size = px(14))
-
-# guardar
-gtsave(gt_tbl, "../results/haplotypes/diversity_stats/mtDNA_stats.html")
-# gtsave(gt_tbl, "../results/haplotypes/diversity_stats/mtDNA_stats.png")  # requires webshot2 o chromote
-
-```
-
-
-
-## Diversity stats for mtDNA not deduplicated dataset
+# 2. Diversity stats for mtDNA with outgroups
 
 ```{r}
-aln <- read.dna("../results/haplotypes/diversity_stats/alignment_filtered/mtDNA_concat_reversed_filtered.nex", format="nexus")
-rownames(aln) <- gsub("_", "", rownames(aln))
-nrow(aln)
-ncol(aln)
-rownames(aln)[1:5]
-```
-
-## Global stats
-```{r}
-S_global  <- length(seg.sites(aln))            # sitios segregantes (S)
-pi_global <- nuc.div(aln)                      # diversidad nucleotídica (π)
-L_global  <- ncol(aln)                         # longitud del alineamiento
-k_global  <- pi_global * L_global              # diferencias promedio por par (k)
-haps      <- haplotype(aln)                    # haplotipos únicos
-nH_global <- nrow(haps)                        # número de haplotipos
-Hd_global <- hap.div(aln, variance = TRUE)     # diversidad haplotípica (Hd) (+ var.)
-
-S_global
-pi_global
-k_global
-nH_global
-Hd_global
-```
-
-## Save a pretty table
-```{r}
-tab_global <- data.frame(
-  scope = "GLOBAL",
-  S = S_global,
-  pi = pi_global,
-  k  = k_global,
-  n_haplotypes = nH_global,
-  Hd = Hd_global[1],                   # valor
-  Hd_var = Hd_global[2]                # varianza
+aln_dedup_og <- read.dna("../results/haplotypes/diversity_stats/mtDNA_concat.nex-out.fas", format="fasta")
+aln_dedup_og<- DNA_sp_format(aln_dedup_og)
+aln_no_dedup_og <- read.dna("../results/haplotypes/diversity_stats/mtDNA_concat_reversed.nex-out.fas", format="fasta")
+aln_no_dedup_og <- DNA_sp_format(aln_no_dedup_og)
+stats_with_outgroups <- list(
+  "Deduplicated" = calc_diversity(aln_dedup_og),
+  "Not deduplicated" = calc_diversity(aln_no_dedup_og)
 )
-write.csv(tab_global, "../results/haplotypes/diversity_stats/mtDNA_stats_reversed.csv", row.names = FALSE)
-tab_global
 
-# formateo: enteros y 3 decimales
-tab_global_fmt <- tab_global |>
-  dplyr::mutate(
-    S = as.integer(S),
-    n_haplotypes = as.integer(n_haplotypes)
-  )
-
-gt_tbl <- gt(tab_global_fmt) |>
-  tab_header(
-    title = md("**mtDNA diversity summary (not deduplicated) **"),
-    subtitle = "ND1 + Cyt-b (concatenated)"
-  ) |>
-  cols_label(
-    scope        = "Scope",
-    S            = "S (segregating sites)",
-    pi           = html("&pi; (nucleotide diversity)"),
-    k            = html("k (avg. pairwise differences)"),
-    n_haplotypes = "Unique haplotypes",
-    Hd           = html("H<sub>d</sub>"),
-    Hd_var       = html("Var(H<sub>d</sub>)")
-  ) |>
-  fmt_number(columns = c(pi, k, Hd, Hd_var), decimals = 3) |>
-  fmt_number(columns = c(S, n_haplotypes), decimals = 0) |>
-  tab_options(table.font.size = px(14))
-
-# guardar
-gtsave(gt_tbl, "../results/haplotypes/diversity_stats/mtDNA_stats_reversed.html")
-# gtsave(gt_tbl, "../results/haplotypes/diversity_stats/mtDNA_stats_reversed.png")  # requiressss webshot2 o chromote
-
+tab2 <- save_diversity_table(stats_with_outgroups, "mtDNA diversity summary (with outgroups)", "mtDNA_stats_with_outgroups")
+print(tab2)
 ```
 
+# 3. Generating the "sample_to_region_mtDNA.tsv" file 
 
-
-
-
-
-
-
-
-
-
-# Verifying the count adds as closer as much to 225
+Here we are verifying the count adds as closer as much to 225 samples (as in Chan et al. 2020)
 ```{r}
 # 2) Carga el mapeo muestra→región (del paso A) y sincroniza orden
 map <- read_tsv("../data/sample_to_region_mtDNA.tsv", show_col_types = FALSE)

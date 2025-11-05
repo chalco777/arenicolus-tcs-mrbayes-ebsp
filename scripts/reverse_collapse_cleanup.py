@@ -1,113 +1,106 @@
 #!/usr/bin/env python3
-"""
-reverse_collapse_cleanup.py
+# Regenerates previous (to deduplication) NEXUS by duplicating rows from the "counts" file.
+# - For duplicates, keep the first label as-is and add suffixes _2, _3, ...
 
-This script reverses the effect of collapsing identical sequences in a
-haplotype alignment by expanding each unique sequence back to the number
-of individuals that share that haplotype.  It reads a NEXUS alignment along with a tab‐separated file listing each haplotype identifier and the number of individuals represented by
-that identifier (the “count” column).  It writes a new NEXUS file in
-which each unique sequence is repeated according to its count and the
-taxon names are suffixed with an index (e.g. `_1`, `_2`, …) to
-distinguish the replicated records.
-
-Usage (example):
-    python reverse_collapse_cleanup.py \
-        -i ../results/phylogenetic_analysis/alignment/mtDNA_concat.nex \
-        --counts ../data/sample_to_region_mtDNA.tsv \
-        --output ../results/haplotypes/diversity_stats/mtDNA_concat_reversed.nex
-
-The counts file should have at least two columns: a header row with
-"sample" and "count" (tab separated), where each subsequent line gives
-the taxon name and the integer count.  Missing or empty counts are
-treated as `1`.
-"""
-
-import argparse
-import csv
-import sys
+import argparse, csv, re
 from pathlib import Path
 
-from Bio import AlignIO
-from Bio.Align import MultipleSeqAlignment
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--input", required=True, type=Path)
+ap.add_argument("-c", "--counts", required=True, type=Path)
+ap.add_argument("-o", "--output", required=True, type=Path)
+args = ap.parse_args()
 
+# Read counts TSV (expects a header with sample/taxon/name and count)
+counts = {}
+with args.counts.open(newline="") as fh:
+    r = csv.DictReader(fh, delimiter="\t")
+    hdr = [h.strip().lower() for h in (r.fieldnames or [])]
+    if not hdr:
+        raise SystemExit("Counts TSV needs a header")
+    # pick name column
+    for cand in ("sample", "taxon", "name"):
+        if cand in hdr:
+            name_col = cand
+            break
+    else:
+        raise SystemExit("Counts TSV: missing 'sample' (or 'taxon'/'name') column")
+    count_col = "count" if "count" in hdr else None
+    for row in r:
+        name = (row.get(name_col) or "").strip()
+        if not name:
+            continue
+        c = row.get(count_col) if count_col else ""
+        try:
+            c = int(str(c).strip()) if str(c).strip() else 1
+        except ValueError:
+            c = 1
+        counts[name] = max(1, c)
 
-def load_counts(tsv_file: Path) -> dict:
-    """Load counts per sample from a TSV file.
+text = args.input.read_text()
 
-    The TSV is expected to have at least two columns: `sample` and `count`.
-    If the count field is blank or cannot be parsed as an integer, a
-    default of 1 is used.
+# Find DATA block
+m_begin = re.search(r'(?is)\bbegin\s+data\s*;', text)
+if not m_begin:
+    raise SystemExit("BEGIN DATA; not found")
+# find the next END; after BEGIN DATA;
+m_end = re.search(r'(?is)\bend\s*;', text[m_begin.end():])
+if not m_end:
+    raise SystemExit("END; for DATA not found")
+data_start = m_begin.start()
+data_end   = m_begin.end() + m_end.end()
+data_block = text[data_start:data_end]
 
-    Args:
-        tsv_file: Path to the tab-separated counts file.
+# Find MATRIX block inside DATA
+m_mat_line = re.search(r'(?im)^\s*matrix\s*\r?\n', data_block)
+if not m_mat_line:
+    raise SystemExit("MATRIX line not found")
+mat_start = m_mat_line.end()
+m_semicolon = re.search(r'(?im)^\s*;\s*$', data_block[mat_start:])
+if not m_semicolon:
+    raise SystemExit("Closing ';' for MATRIX not found")
+mat_end = mat_start + m_semicolon.start()
+matrix_text = data_block[mat_start:mat_end]
 
-    Returns:
-        A dictionary mapping sample names (str) to integer counts.
-    """
-    counts: dict[str, int] = {}
-    with tsv_file.open() as fh:
-        reader = csv.DictReader(fh, delimiter='\t')
-        for row in reader:
-            name = row.get('sample') or row.get('Sample') or row.get('taxon')
-            if not name:
-                continue
-            count_str = (row.get('count') or '').strip()
-            try:
-                count = int(count_str) if count_str else 1
-            except ValueError:
-                count = 1
-            counts[name] = count
-    return counts
+# Build new matrix
+new_lines = []
+ntax = 0
+pat = re.compile(r'^(\s*)(\S+)(\s+)(\S.*)$')  # leading, label, space(s), rest
+for raw in matrix_text.splitlines():
+    if not raw.strip() or raw.lstrip().startswith('['):
+        new_lines.append(raw)
+        continue
+    m = pat.match(raw)
+    if not m:
+        new_lines.append(raw)  # keep as-is
+        continue
+    lead, label, mid, rest = m.groups()
+    n = counts.get(label, 1)
+    # first occurrence: original label
+    new_lines.append(f"{lead}{label}{mid}{rest}")
+    ntax += 1
+    # duplicates with suffixes
+    for k in range(2, n + 1):
+        new_label = f"{label}_{k}"
+        new_lines.append(f"{lead}{new_label}{mid}{rest}")
+        ntax += 1
 
+new_matrix_text = "\n".join(new_lines)
 
-def reverse_collapse_nexus(input_path: Path, counts: dict[str, int], output_path: Path) -> None:
-    """Expand a collapsed NEXUS alignment according to counts.
+# Replace MATRIX content
+new_data_block = data_block[:mat_start] + new_matrix_text + data_block[mat_end:]
 
-    Reads the alignment at `input_path`, looks up each record's ID in
-    `counts` (defaulting to 1 if not found), and writes a new NEXUS
-    alignment to `output_path` in which each record appears as many
-    times as its count.  Replicated records have their ID suffixed
-    with `_1`, `_2`, etc., to remain unique.
+# Update NTAX before MATRIX (only the last occurrence)
+head = new_data_block[:m_mat_line.start()]
+tail = new_data_block[m_mat_line.start():]
+occ = list(re.finditer(r'(?i)(NTAX\s*=\s*)(\d+)', head))
+if occ:
+    a = occ[-1]
+    s, e = a.span(2)
+    head = head[:s] + str(ntax) + head[e:]
+new_data_block = head + tail
 
-    Args:
-        input_path: Path to the input NEXUS file containing unique haplotypes.
-        counts: Dictionary of taxon counts.
-        output_path: Path where the expanded NEXUS should be written.
-    """
-    # Read alignment using Biopython.  AlignIO returns a
-    # MultipleSeqAlignment object whose records have .id and .seq
-    alignment = AlignIO.read(input_path, 'nexus')
-
-    expanded_records = []
-    for record in alignment:
-        # Determine how many copies to make for this record
-        n = counts.get(record.id, 1)
-        for i in range(1, n + 1):
-            # Create a copy of the SeqRecord (shallow copy retains .seq)
-            new_record = record[:]
-            # Assign a new ID and name with suffix
-            new_id = f"{record.id}_{i}"
-            new_record.id = new_id
-            new_record.name = new_id
-            expanded_records.append(new_record)
-
-    # Create a new MultipleSeqAlignment from the expanded records
-    expanded_alignment = MultipleSeqAlignment(expanded_records)
-    # Write the expanded alignment in NEXUS format
-    AlignIO.write(expanded_alignment, output_path, 'nexus')
-
-
-def main(argv: list[str] | None = None) -> None:
-    parser = argparse.ArgumentParser(description="Expand collapsed NEXUS alignment using counts from TSV.")
-    parser.add_argument("--input", "-i", type=Path, required=True, help="Path to input NEXUS file (collapsed alignment)")
-    parser.add_argument("--counts", "-c", type=Path, required=True, help="TSV file with sample and count columns")
-    parser.add_argument("--output", "-o", type=Path, required=True, help="Path to output NEXUS file (expanded alignment)")
-
-    args = parser.parse_args(argv)
-
-    counts = load_counts(args.counts)
-    reverse_collapse_nexus(args.input, counts, args.output)
-
-
-if __name__ == "__main__":
-    main()
+# Stitch back to full text
+out_text = text[:data_start] + new_data_block + text[data_end:]
+args.output.write_text(out_text)
+print(f"Done. NTAX={ntax}")

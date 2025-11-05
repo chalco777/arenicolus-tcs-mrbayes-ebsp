@@ -232,11 +232,11 @@ For these analyses only individuals present in the GenPop file (that is, those w
 
 It is worth noting that for calculating S, pi, number of haplotypes and K, from the concatenated mitochondrial alignment they used the previous, not deduplicated alignment. Thus, to try to replicate the original DNAsp stats from the concatenated alignment, we first generated the [sample_to_region_mtDNA.tsv](data/sample_to_region_mtDNA.tsv) file using the second section of [sample_to_regions.R](scripts/sample_to_regions.R). This file only had the regions for the sample ids that also happened to be sequenced for microsatellites. Then we manually annotated the count for each sample id (or voucher) from the Figure 3 in Chan et al. 2020. We also tried to complete the regions that were not given using that phylogenetic tree. 
 
-After that, we used the count for each mitochondrial sequence (or haplotype) together with the script [reverse_collapse_cleanup.py.py](scripts/reverse_collapse_cleanup.py) for regenerated their original, not deduplicated, alignment. 
+After that, we used the count for each mitochondrial sequence (or haplotype) together with the script [reverse_collapse_cleanup.py](scripts/reverse_collapse_cleanup.py) for regenerated their original, not deduplicated, alignment. 
 
 ```bash
 python reverse_collapse_cleanup.py \
-    -i ../results/phylogenetic_analysis/model_selection/mtDNA_concat.nex \
+    -i ../results/phylogenetic_analysis/alignment/mtDNA_concat.nex \
     --counts ../data/sample_to_region_mtDNA.tsv \
     --output ../results/haplotypes/diversity_stats/mtDNA_concat_reversed.nex
 ```
@@ -250,12 +250,12 @@ TAXA="JWA338 JWA470 Phr_corona SGR4 SGR3 Sce_jarrov Sce_merria Sce_occide Uro_or
 amas remove -d dna -f nexus -i mtDNA_concat.nex -x $TAXA -u nexus -g tmp_
 mv tmp_mtDNA_concat.nex-out.nex alignment_filtered/mtDNA_concat_filtered.nex
 
-TAXA_REV="JWA338_1 JWA470_1 Phr_corona_1 SGR4_1 SGR3_1 Sce_jarrov_1 Sce_merria_1 Sce_occide_1 Uro_ornatu_1 Uta_stansb_1 MVZ149956_1 MVZ237413_1 MVZ241596_1 CAS223822_1 CAS229140_1"
-
 # mtDNA_concat_reversed.nex -> NEXUS filtrado
-amas remove -d dna -f nexus -i mtDNA_concat_reversed.nex -x $TAXA_REV -u nexus -g tmp_
+amas remove -d dna -f nexus -i mtDNA_concat_reversed.nex -x $TAXA -u nexus -g tmp_
 mv tmp_mtDNA_concat_reversed.nex-out.nex alignment_filtered/mtDNA_concat_reversed_filtered.nex
 ```
+
+We used DnaSP and the R packages ape and pegas for calculating diversity statistics. The R notebook used is [diversity_stats.Rmd](/scripts/diversity_stats.Rmd). As the default algorithm of DnaSP does, in our R script we ignored columns with gaps and missing nucleotides before calculating the metrics. Preliminar results (yet to be commented) are [here](/results/haplotypes/diversity_stats/).
 
 
 (Luego replicar para loci nucleares)
