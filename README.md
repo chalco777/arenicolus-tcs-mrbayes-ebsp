@@ -232,12 +232,16 @@ For these analyses only individuals present in the GenPop file (that is, those w
 
 It is worth noting that for calculating S, pi, number of haplotypes and K, from the concatenated mitochondrial alignment they used the previous, not deduplicated alignment. Thus, to try to replicate the original DNAsp stats from the concatenated alignment, we first generated the [sample_to_region_mtDNA.tsv](data/sample_to_region_mtDNA.tsv) file using the second section of [sample_to_regions.R](scripts/sample_to_regions.R). This file only had the regions for the sample ids that also happened to be sequenced for microsatellites. Then we manually annotated the count for each sample id (or voucher) from the Figure 3 in Chan et al. 2020. We also tried to complete the regions that were not given using that phylogenetic tree. 
 
-After that, we used the count for each mitochondrial sequence (or haplotype) together with the script (.py)[] for regenerated their original, not deduplicated, alignment. Although our matrix has 223x2097 bp, in contrast with theirs, that had 225x2097 bp.
+After that, we used the count for each mitochondrial sequence (or haplotype) together with the script [reverse_collapse_cleanup.py.py](scripts/reverse_collapse_cleanup.py) for regenerated their original, not deduplicated, alignment. 
 
+```bash
+python reverse_collapse_cleanup.py \
+    -i ../results/phylogenetic_analysis/model_selection/mtDNA_concat.nex \
+    --counts ../data/sample_to_region_mtDNA.tsv \
+    --output ../results/haplotypes/diversity_stats/mtDNA_concat_reversed.nex
+```
+Our new matrix has 223x2097 bp, in contrast with theirs, that had 225x2097 bp. Hower, it's much more close than our previous, deduplicated matrix of 123x2097 bp.
 
-
-ellos dicen 
-225 seq en su alineamiento mitocondrial!!
 
 (Luego replicar para loci nucleares)
 
