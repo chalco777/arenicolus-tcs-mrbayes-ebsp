@@ -61,7 +61,7 @@ save_diversity_table <- function(stats_list, title, filename_base) {
       Hd = html("H<sub>d</sub>"),
       Hd_var = html("Var(H<sub>d</sub>)")
     )   |>
-    fmt_number(columns = c(pi, k, Hd, Hd_var), decimals = 3) |>
+    fmt_number(columns = c(pi, k, Hd, Hd_var), decimals = 4) |>
     fmt_number(columns = c(S, n_haplotypes), decimals = 0) |>
     tab_style(
       style = cell_text(align = "center"),
