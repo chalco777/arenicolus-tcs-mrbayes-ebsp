@@ -257,6 +257,20 @@ mv tmp_mtDNA_concat_reversed.nex-out.nex alignment_filtered/mtDNA_concat_reverse
 
 We used DnaSP and the R packages ape and pegas for calculating diversity statistics. The R notebook used is [diversity_stats.Rmd](/scripts/diversity_stats.Rmd). As the default algorithm of DnaSP does, in our R script we ignored columns with gaps and missing nucleotides before calculating the metrics. Preliminar results (yet to be commented) are [here](/results/haplotypes/diversity_stats/).
 
+## PopArt
+
+We prepared the input nexus with the traits section using the python script [popart_region_nexus.py](/scripts/popart_region_nexus.py)
+
+```bash
+
+python popart_region_nexus.py ../data/sample_to_region_mtDNA.tsv ../results/haplotypes/diversity_stats/alignment_filtered/mtDNA_concat_reversed_filtered.nex ../results/haplotypes/popart/mtDNA_concat_reversed_filtered_traits.nex
+```
+
+
+According to PopArt: # of parsimony informative sites 65
+
+
+> **Note:** PopART masks (ignores) any alignment column containing gaps or ambiguous characters (?, N, Y, R) before collapsing. This means that columns with any gaps/ambiguities are removed for everyone, and some sequences that were not identical may become identical after this masking (and therefore collapse). In this sense PopArt behaves similarly to DnaSP's default mode
 
 (Luego replicar para loci nucleares)
 
