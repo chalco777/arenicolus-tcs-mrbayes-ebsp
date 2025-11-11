@@ -240,7 +240,7 @@ python reverse_collapse_cleanup.py \
     --counts ../data/sample_to_region_mtDNA.tsv \
     --output ../results/haplotypes/diversity_stats/mtDNA_concat_reversed.nex
 ```
-Our new matrix has 223x2097 bp, in contrast with theirs, that had 225x2097 bp. Hower, it's much more close than our previous, deduplicated matrix of 123x2097 bp. We will compare both, our dedup and our regenerated original, with the original, not deduplicated, matrix of Chan.
+Our new matrix has 223x2097 bp, in contrast with theirs, that had 225x2097 bp. However, it's closer than our previous, deduplicated matrix of 123x2097 bp. We will compare both, our dedup and our regenerated original, with the original, not deduplicated, matrix of Chan.
 
 For diversity stats, we removed outgroups with AMAS:
 
@@ -272,6 +272,9 @@ According to PopArt: # of parsimony informative sites 65
 
 > **Note:** PopART masks (ignores) any alignment column containing gaps or ambiguous characters (?, N, Y, R) before collapsing. This means that columns with any gaps/ambiguities are removed for everyone, and some sequences that were not identical may become identical after this masking (and therefore collapse). In this sense PopArt behaves similarly to DnaSP's default mode
 
+
+
+
 (Luego replicar para loci nucleares)
 
 Count number of PI sites. They used PAUP. I will use iqtree result
@@ -280,3 +283,13 @@ mtDNA_concat.fasta->They count # of Haplotypes, S (segregating sites), pi (nucle
 
 Redes de haplotipos TCS network
 Alineamiento->Debo generar un nex con haplotipos y con los tags y de donde viene aca haplotipo ps, o sea a qué tag pertence. Parece que ella lo genero desde DNAsp ese nex
+
+
+| nuclear locus | nº sequences | nº unique individuals | nº individuals with region                                                                         |
+| ------------- | ------------- | -------------------- | ------------------------------------------------------------------------------------------------- |
+| prlr          | 12            | 9                    | 5 (CSA043, DED049, DED075, DJL868, DL914)                                                         |
+| r35           | 12            | 9                    | 4 (CSA061, ESP9245, TCWC91345, TJH2846)                                                           |
+| scar298anl    | 14            | 13                   | 3 (ESP9232, MTH270, MTH472)                                                                       |
+| scar875anl    | 34            | 25                   | 11 (CSA043, CSA059, DED051, DED075, ESP9232, LAF10450, MTH270, MTH472, TJH2840, TJH2880, TJH2971) |
+
+For a robust ABC, a larger sample (several dozen individuals per population and per locus) and more balanced coverage are recommended.
