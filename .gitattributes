@@ -1,1 +1,6 @@
 *.html linguist-documentation
+*.txt linguist-generated
+*.pkl linguist-generated
+*.nex linguist-generated
+*.log linguist-generated
+*.ufboot linguist-generated
