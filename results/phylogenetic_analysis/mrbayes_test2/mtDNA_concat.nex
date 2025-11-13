@@ -134,7 +134,7 @@ END;
 
 begin mrbayes;
 
-    set autoclose=yes nowarn=yes;
+    set autoclose=yes nowarn=yes usebeagle=no;
 	
 	charset cytb_pos1 = 1-1128\3;
     charset cytb_pos2 = 2-1128\3;
@@ -167,7 +167,7 @@ begin mrbayes;
 	unlink revmat=(all) statefreq=(all) shape=(all) pinvar=(all) tratio=(all);
     prset ratepr=variable;
 
-    mcmcp ngen=50000000 nruns=2 nchains=4 printfreq=5000 samplefreq=5000 diagnfreq=50000 burninfrac=0.25;
+    mcmcp ngen=1100000 nruns=2 nchains=4 printfreq=5000 samplefreq=250 diagnfreq=50000 burninfrac=0.25;
 	mcmcp stoprule=yes stopval=0.01;
     mcmc;
     sump; sumt;

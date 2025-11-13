@@ -223,6 +223,12 @@ iqtree2 \
 ```
 Revisar log
 
+We used MrBayes 3.2.7a in its parallel version with MPI (mb-mpi), running under WSL. We run MrBayes with mpirun using 5 processes (mpirun -np 5 mb-mpi file.nex) to take advantage of 5 of the 6 cores on my laptop, leaving one free for the system. 
+
+In the MrBayes block, we defined a partition scheme by codons and by gene, according to the concatenated alignment of the mitochondrial genes cytb and nd1. To do this, the alignment was divided into six partitions: three codon positions for cytb and three for nd1 (cytb_pos1, cytb_pos2, cytb_pos3, nd1_pos1, nd1_pos2, nd1_pos3) and grouped them into a general partition (partition parts = 6: ...; set partition=parts;). For each of these partitions, possibly different substitution models were specified, using lset with combinations of nst=6 or nst=2 and gamma rate schemes, invgamma or propinv, according to the expected behavior for each codon position and the parameterization reported or suggested in the original work. For base frequencies, we used prset statefreqpr=fixed(...), employing equal frequencies in some cases and pre-estimated empirical frequencies in others. Subsequently, we applied unlink revmat=(all) statefreq=(all) shape=(all) pinvar=(all) tratio=(all) so that each partition had its own set of parameters (substitution matrix, frequencies, gamma shape, proportion of invariant sites, and transition/transversion ratio), and set prset ratepr=variable to allow each partition to have its own rate multiplier. With this, we implemented a fully partitioned and unlinked model, which better reflects the evolutionary differences between genes and codon positions. 
+
+We configured the MCMC defining a maximum number of generations of 1,200,000 (ngen=1200000) with two independent runs (nruns=2) and four chains per run (nchains=4), i.e., a total of eight chains, to promote good mixing and to be able to evaluate convergence between runs. We set the sampling frequency for parameters and trees to 250 (samplefreq=250), with the aim of obtaining sufficient samples for subsequent summaries without generating excessively large files. Then, we also set diagnfreq=50000 so that MrBayes would periodically evaluate convergence diagnostics, set a burn-in fraction of 25% (burninfrac=0.25) and activated the automatic stop rule with stoprule=yes stopval=0.01, so that the run would stop when the convergence statistic (PSRF) reached a value sufficiently close to 1. Initially, we tried to use the BEAGLE library to speed up the likelihood calculation through internal parallelization (CPU/GPU), but in the WSL environment some errors arose associated with the use of OpenCL and GPU devices (/dev/dri/renderD128 and CL_DEVICE_NOT_FOUND), which prevented the program from starting the MCMC correctly. Since the main benefit in computing time in my case comes from chain-level parallelism using MPI (5 processes) and since BEAGLE's CPU performance versus MrBayes' optimized internal likelihood is usually similar for moderate DNA alignments, we chose to disable BEAGLE in this context (usebeagle=no). In this way, MrBayes uses its internal CPU likelihood implementation, while MPI distributes the chains among cores, providing a stable and efficient combination for reproducing the phylogenetic analysis with the specified partitioned model and within the available hardware resources.
+
 ## DNAsp and R diversity stats:
 
 For these analyses only individuals present in the GenPop file (that is, those with microsatellite data) had the specific sample region. The regions for each sample were extracted from the microsatellite_genotypes.gen.txt file using the (first section of the) script [sample_to_regions.R](scripts/sample_to_regions.R). For individuals who do not appear in Genepop, there is no public list in the supplementary materials that assigns their regions. These are likely to be:
@@ -240,7 +246,7 @@ python reverse_collapse_cleanup.py \
     --counts ../data/sample_to_region_mtDNA.tsv \
     --output ../results/haplotypes/diversity_stats/mtDNA_concat_reversed.nex
 ```
-Our new matrix has 223x2097 bp, in contrast with theirs, that had 225x2097 bp. Hower, it's much more close than our previous, deduplicated matrix of 123x2097 bp. We will compare both, our dedup and our regenerated original, with the original, not deduplicated, matrix of Chan.
+Our new matrix has 223x2097 bp, in contrast with theirs, that had 225x2097 bp. However, it's closer than our previous, deduplicated matrix of 123x2097 bp. We will compare both, our dedup and our regenerated original, with the original, not deduplicated, matrix of Chan.
 
 For diversity stats, we removed outgroups with AMAS:
 
@@ -272,6 +278,9 @@ According to PopArt: # of parsimony informative sites 65
 
 > **Note:** PopART masks (ignores) any alignment column containing gaps or ambiguous characters (?, N, Y, R) before collapsing. This means that columns with any gaps/ambiguities are removed for everyone, and some sequences that were not identical may become identical after this masking (and therefore collapse). In this sense PopArt behaves similarly to DnaSP's default mode
 
+
+
+
 (Luego replicar para loci nucleares)
 
 Count number of PI sites. They used PAUP. I will use iqtree result
@@ -280,3 +289,26 @@ mtDNA_concat.fasta->They count # of Haplotypes, S (segregating sites), pi (nucle
 
 Redes de haplotipos TCS network
 Alineamiento->Debo generar un nex con haplotipos y con los tags y de donde viene aca haplotipo ps, o sea a qué tag pertence. Parece que ella lo genero desde DNAsp ese nex
+
+
+## ABC
+
+| nuclear locus | nº sequences | nº unique individuals | nº individuals with region                                                                         |
+| ------------- | ------------- | -------------------- | ------------------------------------------------------------------------------------------------- |
+| prlr          | 12            | 9                    | 5 (CSA043, DED049, DED075, DJL868, DL914)                                                         |
+| r35           | 12            | 9                    | 4 (CSA061, ESP9245, TCWC91345, TJH2846)                                                           |
+| scar298anl    | 14            | 13                   | 3 (ESP9232, MTH270, MTH472)                                                                       |
+| scar875anl    | 34            | 25                   | 11 (CSA043, CSA059, DED051, DED075, ESP9232, LAF10450, MTH270, MTH472, TJH2840, TJH2880, TJH2971) |
+
+Combining all the nuclear loci, I just have 18 different individuals for whom I can assign a region. And those 18 are distributed among N/S/M quite unevenly.
+For a robust ABC, a larger sample (several dozen individuals per population and per locus) and more balanced coverage are recommended. Thus, I will probably get very inaccurate estimates compared to those in the article.
+
+## Skyline plots
+
+The literature makes it clear that:
+
+* mtDNA is a single locus (even if you have many positions) → Ne(t) reconstruction will be noisier and more sensitive to tree shape than if you had multiple independent loci.
+
+* mtDNA only sees maternal history, and may be under selection (purifying, etc.), which can skew the skyline.
+
+* Increasing the number of loci improves accuracy much more than lengthening sequences from a single locus.
