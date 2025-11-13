@@ -167,7 +167,7 @@ begin mrbayes;
 	unlink revmat=(all) statefreq=(all) shape=(all) pinvar=(all) tratio=(all);
     prset ratepr=variable;
 
-    mcmcp ngen=1100000 nruns=2 nchains=4 printfreq=5000 samplefreq=250 diagnfreq=50000 burninfrac=0.25;
+    mcmcp ngen=1800000 nruns=2 nchains=4 printfreq=5000 samplefreq=300 diagnfreq=50000 burninfrac=0.25;
 	mcmcp stoprule=yes stopval=0.01;
     mcmc;
     sump; sumt;
