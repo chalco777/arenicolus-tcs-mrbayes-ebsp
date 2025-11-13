@@ -315,8 +315,14 @@ The literature makes it clear that:
 
 ##Estimating Fst from microsatellites
 
-First, we adapted the structure of the microsatellites data into the format needed by adegenet to convert the df into a genind object.
+First, we adapted the structure of the microsatellites original data into the format needed by adegenet to convert the df into a genind object.
 
 ```bash
 Rscript convertdb_csv.R
 ```
+Next is running the script for genetic diversity analysis based on microsatellites.
+
+```bash
+Rscript Divgen_usat.R
+```
+Completar modificacion de Divgen_usat.R

@@ -29,7 +29,7 @@ library(poppr)
 ### Importando nuestros datos de microsatélite a R
 csvdb_path <- here("data","fst_analysis","lagartijas_usat.csv")
 micros_lagartijas <- read.table(csvdb_path,sep=",",header=T)
-head(micros_lagartijas)
+#head(micros_lagartijas)
 
 ### Convirtiendo nuestra matriz de datos a diferentes formatos de análisis y verificando la asignación de los individuos a sus respectivas poblaciones
 
