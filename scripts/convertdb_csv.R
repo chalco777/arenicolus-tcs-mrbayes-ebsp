@@ -1,3 +1,6 @@
+#install.packages("here")
+#install.packages("dplyr")
+
 # ==============================
 # 1. Leer archivo original (sin editar)
 # ==============================

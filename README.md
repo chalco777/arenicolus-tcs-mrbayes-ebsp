@@ -312,3 +312,11 @@ The literature makes it clear that:
 * mtDNA only sees maternal history, and may be under selection (purifying, etc.), which can skew the skyline.
 
 * Increasing the number of loci improves accuracy much more than lengthening sequences from a single locus.
+
+##Estimating Fst from microsatellites
+
+First, we adapted the structure of the microsatellites data into the format needed by adegenet to convert the df into a genind object.
+
+```bash
+Rscript convertdb_csv.R
+```

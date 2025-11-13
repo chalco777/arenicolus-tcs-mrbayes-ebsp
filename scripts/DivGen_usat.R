@@ -75,7 +75,25 @@ estbasicos_lagartijas$Ho
 
 colMeans(estbasicos_lagartijas$Ho, na.rm=TRUE)
 
-barplot(colMeans(estbasicos_lagartijas$Ho, na.rm=TRUE), col ="darkseagreen2",main ="Hobs")
+barplot(colMeans(estbasicos_lagartijas$Fis, na.rm=TRUE), col ="darkseagreen2",main ="Fis")
+
+# Extract both components
+perloc <- estbasicos_lagartijas$perloc
+overall <- as.data.frame(t(estbasicos_lagartijas$overall))  # convert to 1-row data frame
+
+# Export per-locus results
+write.csv(
+  perloc,
+  file = here("results","divgen_struct","estadisticas_perlocus.csv"),
+  row.names = TRUE
+)
+
+# Export overall results
+write.csv(
+  overall,
+  file = here("results","divgen_struct","estadisticas_overall.csv"),
+  row.names = TRUE
+)
 
 ### Estimando la Riqueza alélica rarefaccionada (Ar) con allelic.richness de hierfstat
 Ar_lagartijas <- allelic.richness(micros_lagartijas.genind)
@@ -99,7 +117,7 @@ PCApob_lagartijas
 s.label(PCApob_lagartijas$li)
 
 #### Ahora a nivel individual
-escalado_lagartijas <- scaleGen(lagartijas.genind, NA.method="mean")
+escalado_lagartijas <- scaleGen(micros_lagartijas.genind, NA.method="mean")
 escalado_lagartijas
 
 PCAind_lagartijas <- dudi.pca(escalado_lagartijas, scale=FALSE, scannf=FALSE, nf=2)
@@ -108,10 +126,10 @@ PCAind_lagartijas
 ##### Generando la paleta de color para nuestro gráfico
 Cols<-c("yellow","chocolate","green","red4","black","purple","blue")
 color_pallete_function <- colorRampPalette(colors =Cols,space = "Lab")
-num_colors <- nlevels(pop(lagartijas.genind))
+num_colors <- nlevels(pop(micros_lagartijas.genind))
 Colores <- color_pallete_function(num_colors)
 
-plot(PCAind_lagartijas$li,col=transp(Colores[pop(lagartijas.genind)],0.8),pch=20,cex=2,xlab="Axis.1 XXX%",ylab="Axis.2 XXX%",bty="n",cex.axis=1.25,cex.lab=1.5)
+plot(PCAind_lagartijas$li,col=transp(Colores[pop(micros_lagartijas.genind)],0.8),pch=20,cex=2,xlab="Axis.1 XXX%",ylab="Axis.2 XXX%",bty="n",cex.axis=1.25,cex.lab=1.5)
 abline(h=0,lty=3,col="gray75")
 abline(v=0,lty=3,col="gray75")
 legend("bottomleft",legend=levels(pop(lagartijas.genind)),xpd=TRUE,pt.cex=2,text.font=1,cex=1.25,col=Colores,pch=20)
