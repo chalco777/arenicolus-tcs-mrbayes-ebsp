@@ -22,6 +22,9 @@ library(pegas)
 library(ade4)
 library(corrplot)
 library(poppr)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
 
 ## Preparación del conjunto de datos
 
@@ -73,11 +76,6 @@ resumen_lagartijas
 
 resumen_lagartijas$Hobs
 resumen_lagartijas$Hexp
-
-##Graficar
-library(ggplot2)
-library(tidyr)
-library(dplyr)
 
 # Extraer las heterocigosidades observada y esperada del resumen
 Hobs <- resumen_lagartijas$Hobs
@@ -149,7 +147,46 @@ Ar_lagartijas
 
 colSums(Ar_lagartijas$Ar)
 
-barplot(colSums(Ar_lagartijas$Ar), col ="powderblue",main ="Ar")
+# Preparar datos para ggplot
+ar_data <- data.frame(
+  Population = names(colSums(Ar_lagartijas$Ar)),
+  Allelic_Richness = colSums(Ar_lagartijas$Ar)
+)
+
+# Ordenar por riqueza alélica
+ar_data <- ar_data[order(ar_data$Allelic_Richness), ]
+ar_data$Population <- factor(ar_data$Population, levels = ar_data$Population)
+
+# Crear el plot
+ar_plot <- ggplot(ar_data, aes(x = Population, y = Allelic_Richness, fill = Population)) +
+  geom_bar(stat = "identity", alpha = 0.8) +
+  scale_fill_manual(values = rep("#1b9e77", nrow(ar_data))) +
+  labs(
+    title = "Riqueza Alélica (Allelic Richness) por Población",
+    x = "Población",
+    y = "Riqueza Alélica Total",
+    subtitle = "Suma de riqueza alélica rarefaccionada across 27 loci"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    axis.text.y = element_text(size = 10),
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, color = "gray40"),
+    legend.position = "none",
+    panel.grid.major = element_line(color = "gray90"),
+    panel.grid.minor = element_blank()
+  ) +
+  # Añadir valores en las barras
+  geom_text(aes(label = round(Allelic_Richness, 1)), 
+            vjust = -0.5, size = 3, fontface = "bold")
+
+# Mostrar plot
+print(ar_plot)
+
+# Guardar plot
+ggsave(here("results", "divgen_struct", "allelic_richness_plot.png"), 
+       plot = ar_plot, width = 10, height = 6, dpi = 300)
 
 ## Probando el equilibrio de Hardy-Weinberg
 round(hw.test(micros_lagartijas.genind), digits=3)

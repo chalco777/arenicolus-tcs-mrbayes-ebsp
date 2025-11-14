@@ -329,4 +329,53 @@ Next is running the script for genetic diversity analysis based on microsatellit
 ```bash
 Rscript Divgen_usat.R
 ```
-Completar modificacion de Divgen_usat.R
+
+The Fst values revealed three main genetic clusters with consistent differentiation patterns:
+
+```nginx
+Fst matrix (selected values):
+
+NORTH CLUSTER (High connectivity):
+AA-BA: 0.036    AA-C: 0.036    BA-C: 0.026
+
+SOUTH CLUSTER (Moderate connectivity):
+DA-DB: 0.043
+
+MONAHANS CLUSTER (Intermediate differentiation):
+EA-EB: 0.118    EB-EC: 0.070
+
+BETWEEN CLUSTERS (High differentiation):
+AB-DB: 0.243    AB-EB: 0.236    DA-EA: 0.090
+```
+
+The rarefied allelic richness analysis shows genetic diversity variation across populations, with the Monahans cluster maintaining the highest diversity and the Northern cluster displaying internal variation.
+
+```nginx
+TOTAL ALLELIC RICHNESS BY POPULATION:
+
+EC: 74.8    DA: 73.1    C: 70.9    EB: 70.8    EA: 70.0
+BA: 69.1    DB: 69.6    AA: 64.6    AB: 58.6    BB: 56.8
+```
+
+Observed vs Expected Heterozygosity (Hobs vs Hexp):
+
+```nginx
+HETEROZYGOSITY PATTERNS:
+High Diversity Loci (Hobs > 0.8):
+sarms5711: 0.853 | sarms3645: 0.848 | sarms7111: 0.816 | sarms5839: 0.840
+
+Notable Deficits (Hobs << Hexp):
+sarms6346: 0.667 vs 0.937 | sarms3645: 0.848 vs 0.946
+sarms5711: 0.853 vs 0.923 | sarms4015: 0.842 vs 0.918
+
+Low Diversity Loci:
+sarms4545: 0.087 | sarms0830: 0.198 | sarms0506: 0.303
+```
+
+Key Findings:
+
+- 26/27 loci show the expected Hobs < Hexp pattern
+- Overall genetic diversity: Moderate to high (Mean Hobs = 0.62)
+- Most loci are informative for population genetics studies
+- sarms6346 shows significant heterozygote deficit, suggesting potential null alleles
+- Good marker quality with consistent performance across populations
