@@ -1,15 +1,12 @@
-*.html linguist-documentation
-*.txt linguist-generated
-*.pkl linguist-generated
-*.nex linguist-generated
-*.log linguist-generated
-*.ufboot linguist-generated
-
-
+*.html linguist-vendored
+*.txt linguist-detectable=false
+*.pkl linguist-detectable=false
+*.nex linguist-detectable=false
+*.log linguist-detectable=false
+*.ufboot linguist-detectable=false
 *.p   linguist-detectable=false
 *.cls linguist-detectable=false
 *.w   linguist-detectable=false
-
 *.pod  linguist-detectable=false
 *.pod6 linguist-detectable=false
 *.raku linguist-detectable=false

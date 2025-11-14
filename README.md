@@ -206,7 +206,7 @@ mb
 
 > **Note:** In the context of explaining the analysis of primates.nexus mitochondrial seq, MrBayes manual mentions: The Code setting is only relevant if the Nucmodel is set to Codon. The Ploidy setting is also irrelevant for us. 
 
-## MrBayes and ML
+## Iqtree-ML
 
 
 Using ML
@@ -221,7 +221,9 @@ iqtree2 \
   -T AUTO -seed 20251104
 
 ```
-Revisar log
+We performed the final ML inference with IQ-TREE, again using MFP and BIC on the partitioned concatenated alignment, running an ultra-fast bootstrap analysis with 1000 replicates (-B 1000) and activating the --bnni option to optimize each bootstrap tree using NNI exchanges on the resampled alignment, which reduces support inflation due to model violations. The main result of this analysis is the file mtDNA_ML.treefile, which contains the maximum likelihood tree with branch lengths and UFBoot support values annotated on the internal nodes; this tree is the one I use for visualizations and comparisons with the Bayesian tree.
+
+## MrBayes
 
 We used MrBayes 3.2.7a in its parallel version with MPI (mb-mpi), running under WSL. We run MrBayes with mpirun using 5 processes (mpirun -np 5 mb-mpi file.nex) to take advantage of 5 of the 6 cores on my laptop, leaving one free for the system. 
 
