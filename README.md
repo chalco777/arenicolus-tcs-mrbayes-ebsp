@@ -348,14 +348,55 @@ BETWEEN CLUSTERS (High differentiation):
 AB-DB: 0.243    AB-EB: 0.236    DA-EA: 0.090
 ```
 
+ Methodological Note: FST Calculation Methods
+
+Comparison of FST Estimation Approaches:
+
+```nginx
+METHODOLOGICAL DIFFERENCES:
+This Study (Nei's FST)        | Chan et al. 2020 (Weir & Cockerham)
+------------------------------|--------------------------------------
+• Based on heterozygosity     | • ANOVA-based approach
+• Nei's genetic distance      | • Accounts for sampling variance
+• Simpler computation         | • Handles unequal sample sizes
+• Direct heterozygosity-based | • More robust for structured pops
+```
+
+Key Implications:
+- Patterns are comparable - both methods detect the same three genetic clusters
+- Relative FST values show consistent population relationships
+- Absolute FST values may differ slightly between methods
+- Biological conclusions about population structure remain robust
+- Conservation implications are method-independent
+
+Validation:
+- Both methods identify the same major genetic breaks
+- Cluster assignments are identical despite methodological differences
+- The "Skinny Zone" barrier is detected by both approaches
+- Monahans Sands isolation is consistently supported
+
+##Rarefied allelic richness
 The rarefied allelic richness analysis shows genetic diversity variation across populations, with the Monahans cluster maintaining the highest diversity and the Northern cluster displaying internal variation.
 
 ```nginx
-TOTAL ALLELIC RICHNESS BY POPULATION:
-
-EC: 74.8    DA: 73.1    C: 70.9    EB: 70.8    EA: 70.0
-BA: 69.1    DB: 69.6    AA: 64.6    AB: 58.6    BB: 56.8
+ALLELIC RICHNESS RANKING:
+High Diversity:     EC: 74.8 | DA: 73.1 | C: 70.9 | EB: 70.8 | EA: 70.0
+Moderate Diversity: DB: 69.6 | BA: 69.1 | AA: 64.6
+Lower Diversity:    AB: 58.6 | BB: 56.8
 ```
+
+Contribution to Population Analysis:
+
+- Monahans Cluster (EA, EB, EC) shows highest allelic richness, supporting long-term demographic stability
+- Southern Cluster (DA, DB) maintains high diversity despite recent colonization history
+- Northern Cluster exhibits internal variation: populations C and BA show high richness, while BB shows significant diversity loss
+- BB population has the lowest allelic richness (56.8), suggesting potential founder effects or genetic drift
+- Consistent with FST patterns - populations with higher allelic richness (EC, DA) show lower within-cluster differentiation
+
+Conservation Implications:
+- EC and DA represent important genetic reservoirs
+- BB may require monitoring for genetic diversity loss
+- Monahans populations retain ancestral genetic variation crucial for evolutionary potential
 
 Observed vs Expected Heterozygosity (Hobs vs Hexp):
 
