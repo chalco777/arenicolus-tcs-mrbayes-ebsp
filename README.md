@@ -420,3 +420,18 @@ Key Findings:
 - Most loci are informative for population genetics studies
 - sarms6346 shows significant heterozygote deficit, suggesting potential null alleles
 - Good marker quality with consistent performance across populations
+
+##AMOVA Analysis
+
+**Variance Partitioning**:
+```nginx
+VARIANCE COMPONENTS:
+Between Populations: 21.3%  |  Within Populations: 78.7%
+Phi-statistic: 0.213 (Moderate population structure)
+```
+
+**Key Findings:**
+- Significant population structure detected (21.3% variation among populations)
+- High within-population diversity (78.7%) suggests large effective population sizes
+- Consistent with FST and PCA results - supports three genetic clusters model
+- Moderate differentiation typical of habitat specialists with some gene flow

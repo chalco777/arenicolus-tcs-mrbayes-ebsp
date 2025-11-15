@@ -289,13 +289,13 @@ dev.off()
 Poblaciones <- data.frame("Population"=micros_lagartijas$Population)
 head(Poblaciones)
 
-strata(lagartijas.genind) <- Poblaciones
-setPop(lagartijas.genind) <- ~Population
-lagartijas.genind
+strata(micros_lagartijas.genind) <- Poblaciones
+setPop(micros_lagartijas.genind) <- ~Population
+micros_lagartijas.genind
 
-table(strata(lagartijas.genind, ~Population))
+table(strata(micros_lagartijas.genind, ~Population))
 
-AMOVA_lagartijas <- poppr.amova(lagartijas.genind, ~Population, within = FALSE)
+AMOVA_lagartijas <- poppr.amova(micros_lagartijas.genind, ~Population, within = FALSE)
 AMOVA_lagartijas
 
 
