@@ -298,6 +298,54 @@ table(strata(micros_lagartijas.genind, ~Population))
 AMOVA_lagartijas <- poppr.amova(micros_lagartijas.genind, ~Population, within = FALSE)
 AMOVA_lagartijas
 
+# Extract values directly from AMOVA object
+amova_summary <- data.frame(
+  Component = c("Between Populations", "Within Populations", "Total"),
+  Df = c(AMOVA_lagartijas$results$Df[1], 
+         AMOVA_lagartijas$results$Df[2], 
+         AMOVA_lagartijas$results$Df[3]),
+  Sum_Sq = c(AMOVA_lagartijas$results$`Sum Sq`[1],
+             AMOVA_lagartijas$results$`Sum Sq`[2],
+             AMOVA_lagartijas$results$`Sum Sq`[3]),
+  Mean_Sq = c(AMOVA_lagartijas$results$`Mean Sq`[1],
+              AMOVA_lagartijas$results$`Mean Sq`[2],
+              AMOVA_lagartijas$results$`Mean Sq`[3]),
+  Variance = c(AMOVA_lagartijas$componentsofcovariance$Sigma[1],
+               AMOVA_lagartijas$componentsofcovariance$Sigma[2],
+               AMOVA_lagartijas$componentsofcovariance$Sigma[3]),
+  Percentage = c(AMOVA_lagartijas$componentsofcovariance$`%`[1],
+                 AMOVA_lagartijas$componentsofcovariance$`%`[2],
+                 AMOVA_lagartijas$componentsofcovariance$`%`[3]),
+  Phi_statistic = c(AMOVA_lagartijas$statphi[1], NA, NA)
+)
 
+# Save to CSV
+write.csv(amova_summary, 
+          here("results", "divgen_struct", "AMOVA_summary_auto.csv"),
+          row.names = FALSE)
+
+# Create plot using extracted values
+amova_plot <- ggplot(amova_summary[1:2, ], 
+                     aes(x = Component, y = Percentage, fill = Component)) +
+  geom_bar(stat = "identity", alpha = 0.8) +
+  scale_fill_manual(values = c("#1b9e77", "#d95f02")) +
+  labs(title = "AMOVA - Variance Partitioning",
+       subtitle = paste("Phi-statistic =", 
+                        round(AMOVA_lagartijas$statphi[1], 3)),
+       y = "Percentage of Total Variance (%)",
+       x = "") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, face = "bold")) +
+  geom_text(aes(label = paste0(round(Percentage, 1), "%")), 
+            vjust = -0.5, size = 5, fontface = "bold")
+
+# Save plot
+ggsave(here("results", "divgen_struct", "AMOVA_variance_plot.png"),
+       plot = amova_plot, width = 8, height = 6, dpi = 300)
+
+# Verify extraction
+cat("✅ Values extracted directly from AMOVA object:\n")
+print(amova_summary)
 
 
