@@ -22,7 +22,9 @@ library(pegas)
 library(ade4)
 library(corrplot)
 library(poppr)
-
+library(ggplot2)
+library(tidyr)
+library(dplyr)
 
 ## Preparación del conjunto de datos
 
@@ -31,11 +33,21 @@ csvdb_path <- here("data","fst_analysis","lagartijas_usat.csv")
 micros_lagartijas <- read.table(csvdb_path,sep=",",header=T)
 #head(micros_lagartijas)
 
-### Convirtiendo nuestra matriz de datos a diferentes formatos de análisis y verificando la asignación de los individuos a sus respectivas poblaciones
+### ⭐⭐ NUEVO: ORDENAR POBLACIONES ALFABÉTICAMENTE ⭐⭐
+# Ordenar dataframe por población
+micros_lagartijas <- micros_lagartijas[order(micros_lagartijas$Population), ]
+# Asegurar orden alfabético en el factor
+micros_lagartijas$Population <- factor(micros_lagartijas$Population)
 
-#### Convirtiendo nuestra tabla de datos a formato genind con adegenet
-micros_lagartijas.genind <- df2genind(X=micros_lagartijas[,c(3:ncol(micros_lagartijas))], sep=":", ncode=NULL, ind.names= micros_lagartijas$ID,
-                            pop=micros_lagartijas$Population, NA.char="NA", ploidy=2, type="codom")
+# Verificar el orden
+cat("Poblaciones en orden alfabético:", levels(micros_lagartijas$Population), "\n")
+
+### Convirtiendo nuestra matriz de datos a diferentes formatos de análisis...
+micros_lagartijas.genind <- df2genind(X=micros_lagartijas[,c(3:ncol(micros_lagartijas))], 
+                                      sep=":", ncode=NULL, 
+                                      ind.names = micros_lagartijas$ID,
+                                      pop = micros_lagartijas$Population, 
+                                      NA.char = "NA", ploidy = 2, type = "codom")
 #X=micros_lagartijas[,c(3:ncol)] es así porque se ha señalado solo las columnas donde esta la data de los locus
 #ind.names es nombre de los individuos, la columna
 #ploidy tambien se señala
@@ -63,8 +75,42 @@ resumen_lagartijas <- summary(micros_lagartijas.genind)
 resumen_lagartijas
 
 resumen_lagartijas$Hobs
-
 resumen_lagartijas$Hexp
+
+# Extraer las heterocigosidades observada y esperada del resumen
+Hobs <- resumen_lagartijas$Hobs
+Hexp <- resumen_lagartijas$Hexp
+
+# Convertir ambos a vectores numéricos con nombres de locus
+Hobs <- as.numeric(Hobs)
+Hexp <- as.numeric(Hexp)
+Locus <- adegenet::locNames(micros_lagartijas.genind)
+
+# Crear un data frame limpio
+df_plot <- data.frame(
+  Locus = Locus,
+  Hobs = Hobs,
+  Hexp = Hexp
+) %>%
+  pivot_longer(cols = c(Hobs, Hexp),
+               names_to = "Tipo",
+               values_to = "Valor")
+
+# Generar el gráfico
+hobs_hexp <- ggplot(df_plot, aes(x = Locus, y = Valor, fill = Tipo)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
+  scale_fill_manual(values = c("#1b9e77", "#d95f02"),
+                    labels = c("Hobs", "Hexp")) +
+  labs(x = "Locus", y = "Diversidad (0–1)",
+       fill = "Tipo de heterocigosidad",
+       title = "Comparación de Hobs y Hexp por locus") +
+  theme_minimal(base_size = 13) +
+  theme(
+    axis.text.x = element_text(angle = 60, hjust = 1, size = 10),
+    legend.position = "top"
+  )
+
+ggsave(here("results", "divgen_struct","hobs_hexp.png"), plot = hobs_hexp)
 
 ### Obteniendo estadísticos de resumen básicos con basic.stats de hierfstat
 #### Heterocigosidad observada
@@ -101,7 +147,46 @@ Ar_lagartijas
 
 colSums(Ar_lagartijas$Ar)
 
-barplot(colSums(Ar_lagartijas$Ar), col ="powderblue",main ="Ar")
+# Preparar datos para ggplot
+ar_data <- data.frame(
+  Population = names(colSums(Ar_lagartijas$Ar)),
+  Allelic_Richness = colSums(Ar_lagartijas$Ar)
+)
+
+# Ordenar por riqueza alélica
+ar_data <- ar_data[order(ar_data$Allelic_Richness), ]
+ar_data$Population <- factor(ar_data$Population, levels = ar_data$Population)
+
+# Crear el plot
+ar_plot <- ggplot(ar_data, aes(x = Population, y = Allelic_Richness, fill = Population)) +
+  geom_bar(stat = "identity", alpha = 0.8) +
+  scale_fill_manual(values = rep("#1b9e77", nrow(ar_data))) +
+  labs(
+    title = "Riqueza Alélica (Allelic Richness) por Población",
+    x = "Población",
+    y = "Riqueza Alélica Total",
+    subtitle = "Suma de riqueza alélica rarefaccionada across 27 loci"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    axis.text.y = element_text(size = 10),
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, color = "gray40"),
+    legend.position = "none",
+    panel.grid.major = element_line(color = "gray90"),
+    panel.grid.minor = element_blank()
+  ) +
+  # Añadir valores en las barras
+  geom_text(aes(label = round(Allelic_Richness, 1)), 
+            vjust = -0.5, size = 3, fontface = "bold")
+
+# Mostrar plot
+print(ar_plot)
+
+# Guardar plot
+ggsave(here("results", "divgen_struct", "allelic_richness_plot.png"), 
+       plot = ar_plot, width = 10, height = 6, dpi = 300)
 
 ## Probando el equilibrio de Hardy-Weinberg
 round(hw.test(micros_lagartijas.genind), digits=3)
@@ -129,30 +214,138 @@ color_pallete_function <- colorRampPalette(colors =Cols,space = "Lab")
 num_colors <- nlevels(pop(micros_lagartijas.genind))
 Colores <- color_pallete_function(num_colors)
 
-plot(PCAind_lagartijas$li,col=transp(Colores[pop(micros_lagartijas.genind)],0.8),pch=20,cex=2,xlab="Axis.1 XXX%",ylab="Axis.2 XXX%",bty="n",cex.axis=1.25,cex.lab=1.5)
-abline(h=0,lty=3,col="gray75")
-abline(v=0,lty=3,col="gray75")
-legend("bottomleft",legend=levels(pop(lagartijas.genind)),xpd=TRUE,pt.cex=2,text.font=1,cex=1.25,col=Colores,pch=20)
+### Convertir los resultados del PCA a dataframe para ggplot
+pca_df <- as.data.frame(PCAind_lagartijas$li)
+pca_df$Population <- pop(micros_lagartijas.genind)  # Añadir información de poblaciones
+pca_df$Individuo <- rownames(pca_df)
+
+# Verificar nombres de las columnas (por si son diferentes)
+colnames(pca_df)[1:2] <- c("Axis1", "Axis2")  # Asegurar nombres consistentes
+
+# Calcular porcentaje de varianza explicada
+var_exp <- PCAind_lagartijas$eig / sum(PCAind_lagartijas$eig) * 100
+
+### Crear el gráfico con ggplot2 - LEYENDA FUERA DEL PLOT
+pca_plot <- ggplot(pca_df, aes(x = Axis1, y = Axis2, color = Population)) +
+  geom_point(size = 3, alpha = 0.8, shape = 16) +
+  scale_color_manual(values = Colores, name = "Poblaciones") +
+  labs(
+    x = paste("Axis 1 (", round(var_exp[1], 1), "% de varianza)", sep = ""),
+    y = paste("Axis 2 (", round(var_exp[2], 1), "% de varianza)", sep = ""),
+    title = "Análisis de Componentes Principales (PCA)",
+    subtitle = "Nivel individual - Microsatélites"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major = element_line(color = "gray90", linewidth = 0.2),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(fill = NA, color = "black", linewidth = 0.5),
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 16),
+    plot.subtitle = element_text(hjust = 0.5, color = "gray40", size = 12),
+    legend.position = "right",  # ✅ LEYENDA FUERA, A LA DERECHA
+    legend.key = element_rect(fill = "white"),
+    legend.text = element_text(size = 10),
+    legend.title = element_text(face = "bold", size = 12),
+    legend.background = element_rect(fill = "white", color = "gray70", linewidth = 0.3),
+    plot.margin = margin(1, 1, 1, 1, "cm")  # ✅ Márgenes adecuados para leyenda
+  ) +
+  # Líneas de referencia en 0
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray60", alpha = 0.6) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray60", alpha = 0.6) +
+  # Ajustar leyenda para hacerla más compacta si es necesario
+  guides(color = guide_legend(override.aes = list(size = 3, alpha = 1)))
+
+# Mostrar el gráfico
+print(pca_plot)
+
+# Guardar el gráfico con dimensiones adecuadas para leyenda a la derecha
+ggsave(here("results", "divgen_struct", "PCA_individual_ggplot_final.png"), 
+       plot = pca_plot, 
+       width = 12,  # ✅ Más ancho para acomodar leyenda
+       height = 8, 
+       dpi = 300)
+
+# Mensaje de confirmación
+cat("✅ PCA guardado en: results/divgen_struct/PCA_individual_ggplot_final.png\n")
+cat("📊 Varianza explicada - PC1:", round(var_exp[1], 1), "%, PC2:", round(var_exp[2], 1), "%\n")
+cat("👥 Número de poblaciones:", nlevels(pca_df$Population), "\n")
+cat("🧬 Número total de individuos:", nrow(pca_df), "\n")
 
 ### Aplicando el análisis de Fst pareadas con hierfstat
 FstPareadas_lagartijas <- pairwise.neifst(lagartijas.hierfstat)
 FstPareadas_lagartijas
 
-corrplot(as.matrix(FstPareadas_lagartijas), is.corr=FALSE, type="lower")
+png(here("results", "divgen_struct", "FST_pareadas_corrplot.png"), 
+    width = 10, height = 8, units = "in", res = 300)
+corrplot(as.matrix(FstPareadas_lagartijas), 
+         is.corr = FALSE, 
+         type = "lower",
+         col = colorRampPalette(c("#1b9e77", "red"))(100),
+         tl.col = "black", tl.srt = 45, diag = FALSE,
+         cl.pos = "r", mar = c(0, 0, 1, 0))
+dev.off()
 
 ### Realizando el análisis de AMOVA con poppr
 Poblaciones <- data.frame("Population"=micros_lagartijas$Population)
 head(Poblaciones)
 
-strata(lagartijas.genind) <- Poblaciones
-setPop(lagartijas.genind) <- ~Population
-lagartijas.genind
+strata(micros_lagartijas.genind) <- Poblaciones
+setPop(micros_lagartijas.genind) <- ~Population
+micros_lagartijas.genind
 
-table(strata(lagartijas.genind, ~Population))
+table(strata(micros_lagartijas.genind, ~Population))
 
-AMOVA_lagartijas <- poppr.amova(lagartijas.genind, ~Population, within = FALSE)
+AMOVA_lagartijas <- poppr.amova(micros_lagartijas.genind, ~Population, within = FALSE)
 AMOVA_lagartijas
 
+# Extract values directly from AMOVA object
+amova_summary <- data.frame(
+  Component = c("Between Populations", "Within Populations", "Total"),
+  Df = c(AMOVA_lagartijas$results$Df[1], 
+         AMOVA_lagartijas$results$Df[2], 
+         AMOVA_lagartijas$results$Df[3]),
+  Sum_Sq = c(AMOVA_lagartijas$results$`Sum Sq`[1],
+             AMOVA_lagartijas$results$`Sum Sq`[2],
+             AMOVA_lagartijas$results$`Sum Sq`[3]),
+  Mean_Sq = c(AMOVA_lagartijas$results$`Mean Sq`[1],
+              AMOVA_lagartijas$results$`Mean Sq`[2],
+              AMOVA_lagartijas$results$`Mean Sq`[3]),
+  Variance = c(AMOVA_lagartijas$componentsofcovariance$Sigma[1],
+               AMOVA_lagartijas$componentsofcovariance$Sigma[2],
+               AMOVA_lagartijas$componentsofcovariance$Sigma[3]),
+  Percentage = c(AMOVA_lagartijas$componentsofcovariance$`%`[1],
+                 AMOVA_lagartijas$componentsofcovariance$`%`[2],
+                 AMOVA_lagartijas$componentsofcovariance$`%`[3]),
+  Phi_statistic = c(AMOVA_lagartijas$statphi[1], NA, NA)
+)
 
+# Save to CSV
+write.csv(amova_summary, 
+          here("results", "divgen_struct", "AMOVA_summary_auto.csv"),
+          row.names = FALSE)
+
+# Create plot using extracted values
+amova_plot <- ggplot(amova_summary[1:2, ], 
+                     aes(x = Component, y = Percentage, fill = Component)) +
+  geom_bar(stat = "identity", alpha = 0.8) +
+  scale_fill_manual(values = c("#1b9e77", "#d95f02")) +
+  labs(title = "AMOVA - Variance Partitioning",
+       subtitle = paste("Phi-statistic =", 
+                        round(AMOVA_lagartijas$statphi[1], 3)),
+       y = "Percentage of Total Variance (%)",
+       x = "") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, face = "bold")) +
+  geom_text(aes(label = paste0(round(Percentage, 1), "%")), 
+            vjust = -0.5, size = 5, fontface = "bold")
+
+# Save plot
+ggsave(here("results", "divgen_struct", "AMOVA_variance_plot.png"),
+       plot = amova_plot, width = 8, height = 6, dpi = 300)
+
+# Verify extraction
+cat("✅ Values extracted directly from AMOVA object:\n")
+print(amova_summary)
 
 
