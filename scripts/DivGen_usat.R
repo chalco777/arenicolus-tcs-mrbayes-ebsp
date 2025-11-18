@@ -76,41 +76,41 @@ resumen_lagartijas
 
 resumen_lagartijas$Hobs
 resumen_lagartijas$Hexp
-
-# Extraer las heterocigosidades observada y esperada del resumen
-Hobs <- resumen_lagartijas$Hobs
-Hexp <- resumen_lagartijas$Hexp
-
-# Convertir ambos a vectores numéricos con nombres de locus
-Hobs <- as.numeric(Hobs)
-Hexp <- as.numeric(Hexp)
-Locus <- adegenet::locNames(micros_lagartijas.genind)
-
-# Crear un data frame limpio
-df_plot <- data.frame(
-  Locus = Locus,
-  Hobs = Hobs,
-  Hexp = Hexp
-) %>%
-  pivot_longer(cols = c(Hobs, Hexp),
-               names_to = "Tipo",
-               values_to = "Valor")
-
-# Generar el gráfico
-hobs_hexp <- ggplot(df_plot, aes(x = Locus, y = Valor, fill = Tipo)) +
-  geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
-  scale_fill_manual(values = c("#1b9e77", "#d95f02"),
-                    labels = c("Hobs", "Hexp")) +
-  labs(x = "Locus", y = "Diversidad (0–1)",
-       fill = "Tipo de heterocigosidad",
-       title = "Comparación de Hobs y Hexp por locus") +
-  theme_minimal(base_size = 13) +
-  theme(
-    axis.text.x = element_text(angle = 60, hjust = 1, size = 10),
-    legend.position = "top"
-  )
-
-ggsave(here("results", "divgen_struct","hobs_hexp.png"), plot = hobs_hexp)
+  
+  # Extraer las heterocigosidades observada y esperada del resumen
+  Hobs <- resumen_lagartijas$Hobs
+  Hexp <- resumen_lagartijas$Hexp
+  
+  # Convertir ambos a vectores numéricos con nombres de locus
+  Hobs <- as.numeric(Hobs)
+  Hexp <- as.numeric(Hexp)
+  Locus <- adegenet::locNames(micros_lagartijas.genind)
+  
+  # Crear un data frame limpio
+  df_plot <- data.frame(
+    Locus = Locus,
+    Hobs = Hobs,
+    Hexp = Hexp
+  ) %>%
+    pivot_longer(cols = c(Hobs, Hexp),
+                 names_to = "Tipo",
+                 values_to = "Valor")
+  
+  # Generar el gráfico
+  hobs_hexp <- ggplot(df_plot, aes(x = Locus, y = Valor, fill = Tipo)) +
+    geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
+    scale_fill_manual(values = c("#1b9e77", "#d95f02"),
+                      labels = c("Hobs", "Hexp")) +
+    labs(x = "Locus", y = "Diversidad (0–1)",
+         fill = "Tipo de heterocigosidad",
+         title = "Comparación de Hobs y Hexp por locus") +
+    theme_minimal(base_size = 13) +
+    theme(
+      axis.text.x = element_text(angle = 60, hjust = 1, size = 10),
+      legend.position = "top"
+    )
+  
+  ggsave(here("results", "divgen_struct","hobs_hexp.png"), plot = hobs_hexp)
 
 ### Obteniendo estadísticos de resumen básicos con basic.stats de hierfstat
 #### Heterocigosidad observada
@@ -119,27 +119,54 @@ estbasicos_lagartijas
 
 estbasicos_lagartijas$Ho
 
-colMeans(estbasicos_lagartijas$Ho, na.rm=TRUE)
-
-barplot(colMeans(estbasicos_lagartijas$Fis, na.rm=TRUE), col ="darkseagreen2",main ="Fis")
+  fis_means <- colMeans(estbasicos_lagartijas$Fis, na.rm=TRUE)
+  fis_df <- data.frame(
+    Population = names(fis_means),
+    FIS = as.numeric(fis_means)
+  )
+  fis_df <- fis_df %>%
+    arrange(FIS) %>%
+    mutate(Population = factor(Population, levels = Population))
+  
+  ggplot(fis_df, aes(x = Population, y = FIS, fill = Population)) +
+    geom_bar(stat = "identity", alpha = 0.85) +
+    scale_fill_manual(values = rep("#1b9e77", nrow(fis_df))) +
+    labs(
+      title = "FIS",
+      x = "Población",
+      y = "FIS promedio"
+    ) +
+    theme_minimal(base_size = 13) +
+    theme(
+      legend.position = "none",
+      axis.text.x = element_text(angle = 45, hjust = 1)
+    )
+  
+  ggsave(
+    filename = here("results", "divgen_struct", "FIS_promedio_poblacion.png"),
+    plot = last_plot(),
+    width = 10,
+    height = 6,
+    dpi = 300
+  )
 
 # Extract both components
 perloc <- estbasicos_lagartijas$perloc
 overall <- as.data.frame(t(estbasicos_lagartijas$overall))  # convert to 1-row data frame
-
-# Export per-locus results
-write.csv(
-  perloc,
-  file = here("results","divgen_struct","estadisticas_perlocus.csv"),
-  row.names = TRUE
-)
-
-# Export overall results
-write.csv(
-  overall,
-  file = here("results","divgen_struct","estadisticas_overall.csv"),
-  row.names = TRUE
-)
+  
+  # Export per-locus results
+  write.csv(
+    perloc,
+    file = here("results","divgen_struct","estadisticas_perlocus.csv"),
+    row.names = TRUE
+  )
+  
+  # Export overall results
+  write.csv(
+    overall,
+    file = here("results","divgen_struct","estadisticas_overall.csv"),
+    row.names = TRUE
+  )
 
 ### Estimando la Riqueza alélica rarefaccionada (Ar) con allelic.richness de hierfstat
 Ar_lagartijas <- allelic.richness(micros_lagartijas.genind)
@@ -147,46 +174,46 @@ Ar_lagartijas
 
 colSums(Ar_lagartijas$Ar)
 
-# Preparar datos para ggplot
-ar_data <- data.frame(
-  Population = names(colSums(Ar_lagartijas$Ar)),
-  Allelic_Richness = colSums(Ar_lagartijas$Ar)
-)
-
-# Ordenar por riqueza alélica
-ar_data <- ar_data[order(ar_data$Allelic_Richness), ]
-ar_data$Population <- factor(ar_data$Population, levels = ar_data$Population)
-
-# Crear el plot
-ar_plot <- ggplot(ar_data, aes(x = Population, y = Allelic_Richness, fill = Population)) +
-  geom_bar(stat = "identity", alpha = 0.8) +
-  scale_fill_manual(values = rep("#1b9e77", nrow(ar_data))) +
-  labs(
-    title = "Riqueza Alélica (Allelic Richness) por Población",
-    x = "Población",
-    y = "Riqueza Alélica Total",
-    subtitle = "Suma de riqueza alélica rarefaccionada across 27 loci"
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
-    axis.text.y = element_text(size = 10),
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    plot.subtitle = element_text(hjust = 0.5, color = "gray40"),
-    legend.position = "none",
-    panel.grid.major = element_line(color = "gray90"),
-    panel.grid.minor = element_blank()
-  ) +
-  # Añadir valores en las barras
-  geom_text(aes(label = round(Allelic_Richness, 1)), 
-            vjust = -0.5, size = 3, fontface = "bold")
-
-# Mostrar plot
-print(ar_plot)
-
-# Guardar plot
-ggsave(here("results", "divgen_struct", "allelic_richness_plot.png"), 
-       plot = ar_plot, width = 10, height = 6, dpi = 300)
+  # Preparar datos para ggplot
+  ar_data <- data.frame(
+    Population = names(colSums(Ar_lagartijas$Ar)),
+    Allelic_Richness = colSums(Ar_lagartijas$Ar)
+  )
+  
+  # Ordenar por riqueza alélica
+  ar_data <- ar_data[order(ar_data$Allelic_Richness), ]
+  ar_data$Population <- factor(ar_data$Population, levels = ar_data$Population)
+  
+  # Crear el plot
+  ar_plot <- ggplot(ar_data, aes(x = Population, y = Allelic_Richness, fill = Population)) +
+    geom_bar(stat = "identity", alpha = 0.8) +
+    scale_fill_manual(values = rep("#1b9e77", nrow(ar_data))) +
+    labs(
+      title = "Riqueza Alélica (Allelic Richness) por Población",
+      x = "Población",
+      y = "Riqueza Alélica Total",
+      subtitle = "Suma de riqueza alélica rarefaccionada across 27 loci"
+    ) +
+    theme_minimal(base_size = 12) +
+    theme(
+      axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+      axis.text.y = element_text(size = 10),
+      plot.title = element_text(hjust = 0.5, face = "bold"),
+      plot.subtitle = element_text(hjust = 0.5, color = "gray40"),
+      legend.position = "none",
+      panel.grid.major = element_line(color = "gray90"),
+      panel.grid.minor = element_blank()
+    ) +
+    # Añadir valores en las barras
+    geom_text(aes(label = round(Allelic_Richness, 1)), 
+              vjust = -0.5, size = 3, fontface = "bold")
+  
+  # Mostrar plot
+  print(ar_plot)
+  
+  # Guardar plot
+  ggsave(here("results", "divgen_struct", "allelic_richness_plot.png"), 
+         plot = ar_plot, width = 10, height = 6, dpi = 300)
 
 ## Probando el equilibrio de Hardy-Weinberg
 round(hw.test(micros_lagartijas.genind), digits=3)
