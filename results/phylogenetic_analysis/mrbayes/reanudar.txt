@@ -1,0 +1,4 @@
+execute mtDNA_concat.nex;
+mcmc append=yes ngen=400000 stoprule=yes stopval=0.01;
+sump;
+sumt;
