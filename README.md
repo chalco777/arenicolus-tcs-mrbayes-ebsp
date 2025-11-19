@@ -89,7 +89,7 @@ sed 's/>.*isolate \([^ ]*\).*/>\1/' outgroups_CYTB_sgraciosus_raw.fasta > outgro
 #Example for the file with other outgroups
 sed -E 's/^>[^ ]+ ([A-Z][a-z]{2})[a-z]* ([a-z]{1,6}).*/>\1_\2/' \
   outgroups_CYTB_raw.fasta > outgroups_CYTB.fasta
-# Editing main from S.
+# Editing innergroup of S. arenicolus
 sed 's/>.*isolate \([^ ]*\).*/>\1/' cytochrome_b.fasta > cytochrome_b_clean.fasta
 
 ```
@@ -315,7 +315,7 @@ The literature makes it clear that:
 
 * Increasing the number of loci improves accuracy much more than lengthening sequences from a single locus.
 
-##Estimating Fst from microsatellites
+## Estimating Fst from microsatellites
 
 To work in the Genetic diversity, we weorked with a Rproj that cand be found at the repo parent directory.
 
@@ -421,7 +421,7 @@ Key Findings:
 - sarms6346 shows significant heterozygote deficit, suggesting potential null alleles
 - Good marker quality with consistent performance across populations
 
-##AMOVA Analysis
+## AMOVA Analysis
 
 **Variance Partitioning**:
 ```nginx
