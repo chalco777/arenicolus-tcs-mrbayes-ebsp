@@ -16,8 +16,8 @@ Inputs:
       with entries in two regions) the replicate counts are added
       sequentially.
 
-Usage:
-    python3 popart_region_script.py <sample_to_region.tsv> <input.nex> <output.nex>
+Usage should be like:
+    python popart_region_nexus.py <sample_to_region.tsv> <input.nex> <output.nex>
 """
 
 import sys
