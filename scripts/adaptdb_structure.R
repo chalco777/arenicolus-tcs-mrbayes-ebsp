@@ -1,4 +1,5 @@
 library(tidyverse)
+library(here)
 
 # 1. Cargar el CSV original
 df <- read.csv(here("data","fst_analysis","lagartijas_usat.csv"), stringsAsFactors = FALSE)
@@ -8,16 +9,16 @@ ID <- df$ID
 Population <- df$Population
 df <- df %>% select(-ID, -Population)
 
-# 3. Separar cada locus "A:B" → dos columnas "A" y "B"
+# 3. Separar cada locus "A:B" → dos columnas
 df_separated <- df %>%
   mutate(across(everything(), ~strsplit(.x, ":", fixed = TRUE))) %>%
   unnest_wider(everything(), names_sep = "_")
 
-# 4. MODIFICACIÓN DIRECTA DE NOMBRES
+# 4. Renombrar columnas para formato STRUCTURE
 current_names <- names(df_separated)
 new_names <- ifelse(str_ends(current_names, "_1"),
-                    str_remove(current_names, "_1"),  # Quitar _1
-                    "")                               # _2 → vacío
+                    str_remove(current_names, "_1"),  # columna _1 → nombre del locus
+                    "")                               # columna _2 → nombre vacío
 
 names(df_separated) <- new_names
 
@@ -28,29 +29,19 @@ df_final <- cbind(
   df_separated
 )
 
-# 6. Exportar
+# 6. Exportar SIN HEADERS (porque STRUCTURE no los usa)
 output_file <- here("data","fst_analysis","lagartijas_STRUCTURE.txt")
 
-# Escribir headers (nombres de columnas)
-write.table(t(c("", "", names(df_separated))),
-            file = output_file,
-            sep = "\t",
-            quote = FALSE,
-            row.names = FALSE,
-            col.names = FALSE)
-
-# Escribir datos
 write.table(df_final,
             file = output_file,
             sep = "\t", 
             quote = FALSE,
             row.names = FALSE,
-            col.names = FALSE,
-            append = TRUE)
+            col.names = FALSE)
 
-cat("✅ FORMATO STRUCTURE CORREGIDO\n")
+cat("✅ Archivo STRUCTURE generado SIN primera línea de headers.\n")
 cat("📁 Archivo:", output_file, "\n")
 
-# Verificación final
-cat("🔍 VERIFICACIÓN:\n")
+# Verificación
+cat("🔍 Primeras líneas:\n")
 readLines(output_file, n = 2) %>% walk(~cat(., "\n"))
