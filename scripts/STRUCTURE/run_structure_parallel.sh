@@ -6,6 +6,12 @@ MAX_K=10
 REPLICAS=5
 THREADS=4  # Usar solo 4 núcleos para evitar crashes
 
+SCRIPT_DIR="$(cd -- "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR"
+INPUT_FILE="../../data/fst_analysis/lagartijas_STRUCTURE.txt"
+RESULTS_DIR="../../results/structure"
+LOGS_DIR="$RESULTS_DIR/logs"
+
 echo "=================================================="
 echo "PARALELIZACIÓN DE STRUCTURE - DATASET LAGARTIJAS"
 echo "=================================================="
@@ -19,7 +25,7 @@ echo "Repeticiones: 1,000,000"
 echo "=================================================="
 
 # Crear directorios para resultados
-mkdir -p results logs
+mkdir -p "$RESULTS_DIR" "$LOGS_DIR"
 
 # Función para ejecutar Structure
 run_structure() {
@@ -32,11 +38,11 @@ run_structure() {
     nice -n 10 ./structure \
         -m mainparams \
         -e extraparams \
-        -i lagartijas_STRUCTURE_fixed.txt \
+        -i "$INPUT_FILE" \
         -K "$K" \
         -D "$seed" \
-        -o "results/K${K}_rep${rep}" \
-        > "logs/K${K}_rep${rep}.log" 2>&1
+        -o "$RESULTS_DIR/K${K}_rep${rep}" \
+        > "$LOGS_DIR/K${K}_rep${rep}.log" 2>&1
     
     echo "✅ Completado: K=$K, réplica $rep"
 }
@@ -51,10 +57,10 @@ parallel --progress --delay 1 -j $THREADS run_structure {1} {2} ::: $(seq $MIN_K
 echo "=================================================="
 echo "ANÁLISIS COMPLETADO"
 echo "=================================================="
-echo "Resultados en: results/"
-echo "Logs en: logs/"
+echo "Resultados en: $RESULTS_DIR"
+echo "Logs en: $LOGS_DIR"
 echo "=================================================="
 
 # Generar resumen
 echo "RESUMEN DE ARCHIVOS GENERADOS:"
-ls -la results/ | grep -E "(K[0-9]_rep[0-9]|_f)$"
+ls -la "$RESULTS_DIR" | grep -E "(K[0-9]_rep[0-9]|_f)$"
