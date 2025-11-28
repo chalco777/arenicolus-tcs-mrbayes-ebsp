@@ -1,10 +1,21 @@
 library(tidyverse)
 library(stringr)
+library(here)
+
+# Asume que se abre el proyecto (.Rproj) desde RStudio, por lo que getwd() ya es la raíz
+results_dir <- file.path("results", "structure")
+
+if (!dir.exists(results_dir)) {
+  stop("No existe el directorio de resultados generado por run_structure_parallel.sh: ", results_dir)
+}
 
 # ============================================================
 #  LEER TODOS LOS ARCHIVOS _f DE STRUCTURE
 # ============================================================
-files <- list.files("results", pattern = "_f$", full.names = TRUE)
+files <- list.files(results_dir, pattern = "_f$", full.names = TRUE)
+if (length(files) == 0) {
+  stop("No se encontraron archivos _f en: ", results_dir)
+}
 
 extract_lnp <- function(path) {
   txt <- readLines(path, warn = FALSE)
@@ -83,19 +94,14 @@ print(p1)
 # ============================================================
 
 p2 <- ggplot(evanno, aes(x = K, y = DeltaK)) +
-  geom_point(size = 3, color = "red") +
-  geom_line(color = "red") +
+  geom_point(size = 3, color = "blue") +
+  geom_line(color = "blue") +
+  geom_vline(xintercept = bestK, linetype = "dashed", color = "red") +
   labs(title = "Evanno ΔK",
        x = "K",
        y = "Delta K") +
   theme_minimal(base_size = 14)
-
-
-
-p2 <- p2 + 
-  geom_vline(xintercept = bestK, linetype = "dashed", color = "black") +
-  annotate("text", x = bestK, y = max(evanno$DeltaK, na.rm = TRUE),
-           label = paste("Best K =", bestK), vjust = -1)
+  
 
 print(p2)
 
@@ -107,6 +113,7 @@ print(p2)
 p3 <- ggplot(df, aes(factor(K), LnP)) +
   geom_boxplot(fill = "lightblue") +
   geom_jitter(alpha = 0.4, width = 0.15) +
+  geom_vline(xintercept = bestK, linetype = "dashed", color = "red") +
   labs(title = "Distribución de LnP(K) por réplicas",
        x = "K",
        y = "Ln Probability of Data") +
@@ -115,3 +122,21 @@ p3 <- ggplot(df, aes(factor(K), LnP)) +
 print(p3)
 
 cat("\n\n⭐ Gráficos generados correctamente.\n")
+
+# ============================================================
+# GUARDADO DE PLOTS
+# ============================================================
+
+plots_dir <- here("results", "structure", "plots")
+dir.create(plots_dir, recursive = TRUE, showWarnings = FALSE)
+
+ggsave(here("results", "structure", "plots", "plot_meanLnP.png"),
+       p1, width = 8, height = 6, dpi = 300)
+
+ggsave(here("results", "structure", "plots", "plot_DeltaK.png"),
+       p2, width = 8, height = 6, dpi = 300)
+
+ggsave(here("results", "structure", "plots", "plot_LnP_boxplot.png"),
+       p3, width = 8, height = 6, dpi = 300)
+
+cat("\n📁 Plots guardados en: results/structure/plots/\n")
