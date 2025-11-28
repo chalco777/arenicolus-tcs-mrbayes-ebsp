@@ -42,101 +42,185 @@ print(df)
 cat("\nDatos cargados correctamente.\n")
 # ============================================================
 
-
 # ============================================================
-# CALCULAR MÉTRICAS EVANNO
+# CALCULAR Evanno table (versión corregida)
 # ============================================================
 
-# Calcular manualmente para evitar problemas de longitud
 evanno <- df %>%
   group_by(K) %>%
   summarise(
     Mean_LnP = mean(LnP),
-    SD_LnP = sd(LnP),
-    .groups = 'drop'
+    SD_LnP = sd(LnP)
   ) %>%
-  arrange(K)
+  arrange(K) %>%
+  mutate(
+    LnP_prime = c(NA, diff(Mean_LnP)),                    # first derivative
+    LnP_doubleprime = c(NA, diff(LnP_prime[-1]), NA),     # second derivative corregido
+    DeltaK = abs(LnP_doubleprime) / SD_LnP
+  )
 
-# Calcular derivadas manualmente
-n <- nrow(evanno)
-evanno$LnP_prime <- c(NA, diff(evanno$Mean_LnP))
-evanno$LnP_doubleprime <- c(NA, diff(evanno$LnP_prime[-1]), NA)
-evanno$DeltaK <- abs(evanno$LnP_doubleprime) / evanno$SD_LnP
-
-# Ver resultado
-print(evanno)
-cat("\nTabla Evanno lista.\n")
-# ============================================================
 bestK <- evanno %>%
   filter(DeltaK == max(DeltaK, na.rm = TRUE)) %>%
   pull(K)
 
+cat("\nTabla Evanno lista.\n")
+print(evanno)
+cat("\n")
+cat("✨ Mejor K según método de Evanno:", bestK, "\n")
+
+
 # ============================================================
-# 1. GRAFICO: Mean LnP(K) con barras de error
+# PALETA DE COLORES Y CONFIGURACIÓN
+# ============================================================
+
+# Paleta de colores que usamos anteriormente (azules y verdes)
+mi_paleta <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+               "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf")
+
+# Colores específicos para cada gráfico
+color_lnp <- "#1f77b4"      # Azul principal
+color_deltak <- "#d62728"   # Rojo para Delta K
+color_boxplot <- "#2ca02c"  # Verde para boxplot
+color_bestk <- "#ff7f0e"    # Naranja para línea del mejor K
+
+# ============================================================
+# 1. GRAFICO: Mean LnP(K) con barras de error (MEJORADO)
 # ============================================================
 
 p1 <- ggplot(evanno, aes(x = K, y = Mean_LnP)) +
-  geom_point(size = 3, color = "blue") +
-  geom_line(color = "blue") +
+  geom_point(size = 4, color = color_lnp, alpha = 0.8) +
+  geom_line(color = color_lnp, linewidth = 1, alpha = 0.7) +
   geom_errorbar(aes(ymin = Mean_LnP - SD_LnP, ymax = Mean_LnP + SD_LnP),
-                width = 0.2, color = "gray40") +
-  labs(title = "Mean LnP(K) con barra de error",
-       x = "K",
-       y = "Mean Ln Probability of Data") +
-  geom_vline(xintercept = bestK, linetype = "dotted", color = "red") +
-  theme_minimal(base_size = 14)
+                width = 0.3, color = "gray40", alpha = 0.7) +
+  geom_vline(xintercept = bestK, linetype = "dashed", 
+             color = color_bestk, linewidth = 1) +
+  labs(
+    #  title = "Mean LnP(K) con barras de error",
+    #     subtitle = paste("Máxima probabilidad en K =", bestK),
+    x = "Número de poblaciones (K)",
+    y = "Mean Ln Probability of Data") +
+  scale_x_continuous(breaks = unique(evanno$K)) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5, color = "gray40"),
+    panel.grid.minor = element_blank()
+  )
 
 print(p1)
 
-
 # ============================================================
-# 2. GRAFICO: Delta K vs K (criterio Evanno)
+# 2. GRAFICO: Delta K vs K (Evanno) - MEJORADO
 # ============================================================
 
 p2 <- ggplot(evanno, aes(x = K, y = DeltaK)) +
-  geom_point(size = 3, color = "blue") +
-  geom_line(color = "blue") +
-  geom_vline(xintercept = bestK, linetype = "dashed", color = "red") +
-  labs(title = "Evanno ΔK",
-       x = "K",
+  geom_segment(aes(x = K, xend = K, y = 0, yend = DeltaK), 
+               color = color_deltak, alpha = 0.6, linewidth = 1) +
+  geom_point(size = 5, color = color_deltak, fill = "white", 
+             shape = 21, stroke = 1.5) +
+  geom_vline(xintercept = bestK, linetype = "dashed", 
+             color = color_bestk, linewidth = 1.2) +
+  labs(
+  #    title = "Método de Evanno: ΔK",
+  #     subtitle = paste("K óptimo =", bestK),
+       x = "Número de poblaciones (K)",
        y = "Delta K") +
-  theme_minimal(base_size = 14)
-  
+  scale_x_continuous(breaks = unique(evanno$K)) +
+  annotate("label", x = bestK, y = max(evanno$DeltaK, na.rm = TRUE) * 0.9,
+           label = paste("Mejor K =", bestK), 
+           color = color_bestk, fill = "white", fontface = "bold") +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5, color = "gray40"),
+    panel.grid.minor = element_blank()
+  )
 
 print(p2)
 
-
 # ============================================================
-# 3. GRAFICO: Distribución de LnP por K (boxplot)
+# 3. GRAFICO: Distribución de LnP por K (boxplot) - MEJORADO
 # ============================================================
 
-p3 <- ggplot(df, aes(factor(K), LnP)) +
-  geom_boxplot(fill = "lightblue") +
-  geom_jitter(alpha = 0.4, width = 0.15) +
-  geom_vline(xintercept = bestK, linetype = "dashed", color = "red") +
-  labs(title = "Distribución de LnP(K) por réplicas",
-       x = "K",
+p3 <- ggplot(df, aes(x = factor(K), y = LnP, fill = factor(K))) +
+  geom_boxplot(alpha = 0.8, outlier.shape = NA) +
+  geom_jitter(width = 0.2, alpha = 0.6, size = 1.5, color = "gray30") +
+  geom_vline(xintercept = as.numeric(factor(bestK)), 
+             linetype = "dashed", color = color_bestk, linewidth = 1) +
+  scale_fill_manual(values = mi_paleta, name = "K") +
+  labs(
+  #  title = "Distribución de LnP(K) por réplicas",
+  #     subtitle = paste("Línea punteada indica K =", bestK),
+       x = "Número de poblaciones (K)",
        y = "Ln Probability of Data") +
-  theme_minimal(base_size = 14)
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5, color = "gray40"),
+    legend.position = "none",
+    panel.grid.minor = element_blank()
+  )
 
 print(p3)
 
-cat("\n\n⭐ Gráficos generados correctamente.\n")
+# ============================================================
+# 4. GRAFICO EXTRA: Comparación lado a lado (opcional)
+# ============================================================
+
+library(patchwork)
+
+p_combined <- (p1 | p2) / p3 +
+  plot_annotation(
+    title = "Análisis de Estructura Poblacional - Lagartijas",
+    subtitle = "Resultados del método de Evanno para determinar K óptimo",
+    theme = theme(plot.title = element_text(face = "bold", size = 16, hjust = 0.5))
+  )
+
+print(p_combined)
+
+# ============================================================
+# RESULTADOS NUMÉRICOS
+# ============================================================
+
+cat("\n" ,strrep("=", 60), "\n")
+cat("📊 RESUMEN DE RESULTADOS - MÉTODO DE EVANNO\n")
+cat(strrep("=", 60), "\n\n")
+
+cat("K óptimo según Delta K:", bestK, "\n\n")
+
+cat("Tabla de resultados Evanno:\n")
+print(evanno)
+
+cat("\n📈 Estadísticas por K:\n")
+df %>%
+  group_by(K) %>%
+  summarise(
+    n_replicas = n(),
+    Mean_LnP = round(mean(LnP), 2),
+    SD_LnP = round(sd(LnP), 2),
+    DeltaK = round(first(DeltaK), 2)
+  ) %>%
+  print(n = Inf)
+
+cat("\n✨ Análisis completado correctamente!\n")-
 
 # ============================================================
 # GUARDADO DE PLOTS
 # ============================================================
-
-plots_dir <- here("results", "structure", "plots")
-dir.create(plots_dir, recursive = TRUE, showWarnings = FALSE)
-
-ggsave(here("results", "structure", "plots", "plot_meanLnP.png"),
-       p1, width = 8, height = 6, dpi = 300)
-
-ggsave(here("results", "structure", "plots", "plot_DeltaK.png"),
-       p2, width = 8, height = 6, dpi = 300)
-
-ggsave(here("results", "structure", "plots", "plot_LnP_boxplot.png"),
-       p3, width = 8, height = 6, dpi = 300)
-
-cat("\n📁 Plots guardados en: results/structure/plots/\n")
+# 
+# plots_dir <- here("results", "structure", "plots")
+# dir.create(plots_dir, recursive = TRUE, showWarnings = FALSE)
+# 
+# ggsave(here("results", "structure", "plots", "plot_meanLnP.png"),
+#        p1, width = 8, height = 6, dpi = 300)
+# 
+# ggsave(here("results", "structure", "plots", "plot_DeltaK.png"),
+#        p2, width = 8, height = 6, dpi = 300)
+# 
+# ggsave(here("results", "structure", "plots", "plot_LnP_boxplot.png"),
+#        p3, width = 8, height = 6, dpi = 300)
+# 
+# ggsave(here("results", "structure", "plots", "plot_combined_harvest.png"),
+#        p_combined, width = 10, height = 8, dpi = 300)
+# 
+ cat("\n📁 Plots guardados en: results/structure/plots/\n")
